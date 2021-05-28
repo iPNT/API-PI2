@@ -10,8 +10,8 @@ class PersonagemJogador(
     rpgAtual: Rpg
 ) : Personagem(nomeJogador, elementoJogador) {
 
-    //Arqueiro = 1; Cavaleiro = 2
-    //Arqueiro + Ataque; Cavaleiro + Defesa
+    //Arqueiro = 1; Cavaleiro = 2; Mago = 3(Não foi implementado ainda)
+    //Arqueiro + Velocidade - maxVida; Cavaleiro + Ataque - maxMana; Mago + maxMana - Defesa
 
     var classe: Int = classeJogador
     var vida: Int = 5
@@ -125,24 +125,25 @@ class PersonagemJogador(
         return log
     }
 
-    private fun nivelUp(): String {
+    private fun nivelUp(): String { //Será utilizada a mesma fórmula usada para calcular os status dos monstros: ((2 * statusBase) * nivel)/100 + nivel + 10
+                                    //obs: caso o personagem tenha alguma vantagem com um atributo, adicionar + 2, caso tenha desvantagem com um atributo, diminuir - 2
 
         if (classe == 1) {
-            if (elemento % 2 == 0) {
-                this.ataque += (2)
-                this.defesa += (1)
-            } else {
-                this.ataque += (2)
-                this.defesa += (2)
-            }
+
+            this.maxVida += (1..3).random()
+            this.maxMana += (1..4).random()
+            this.maxAtaque += (1..4).random()
+            this.maxDefesa += (1..4).random()
+            this.maxVelocidade += (2..5).random()
+
         } else {
-            if (elemento % 2 == 0) {
-                this.ataque += (2)
-                this.defesa += (2)
-            } else {
-                this.ataque += (1)
-                this.defesa += (2)
-            }
+
+            this.maxVida += (1..4).random()
+            this.maxMana += (1..3).random()
+            this.maxAtaque += (2..5).random()
+            this.maxDefesa += (1..4).random()
+            this.maxVelocidade += (1..4).random()
+
         }
 
         var log = "\n[ ↑ ] VOCÊ UPOU E AGORA ESTÁ NO NÍVEL ${this.nivel}\n"
