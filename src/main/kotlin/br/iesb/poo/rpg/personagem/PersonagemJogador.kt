@@ -130,19 +130,19 @@ class PersonagemJogador(
 
         if (classe == 1) {
 
-            this.maxVida += (1..3).random()
-            this.maxMana += (1..4).random()
-            this.maxAtaque += (1..4).random()
-            this.maxDefesa += (1..4).random()
-            this.maxVelocidade += (2..5).random()
+            this.maxVida += ((2 * statusBaseVida) * nivel)/100 + nivel + 8
+            this.maxMana += ((2 * statusBaseMana) * nivel)/100 + nivel + 10
+            this.maxAtaque += ((2 * statusBaseAtaque) * nivel)/100 + nivel + 10
+            this.maxDefesa += ((2 * statusBaseDefesa) * nivel)/100 + nivel + 10
+            this.maxVelocidade += ((2 * statusBaseVelocidade) * nivel)/100 + nivel + 12
 
         } else {
 
-            this.maxVida += (1..4).random()
-            this.maxMana += (1..3).random()
-            this.maxAtaque += (2..5).random()
-            this.maxDefesa += (1..4).random()
-            this.maxVelocidade += (1..4).random()
+            this.maxVida += ((2 * statusBaseVida) * nivel)/100 + nivel + 10
+            this.maxMana += ((2 * statusBaseMana) * nivel)/100 + nivel + 8
+            this.maxAtaque += ((2 * statusBaseAtaque) * nivel)/100 + nivel + 12
+            this.maxDefesa += ((2 * statusBaseDefesa) * nivel)/100 + nivel + 10
+            this.maxVelocidade += ((2 * statusBaseVelocidade) * nivel)/100 + nivel + 10
 
         }
 
