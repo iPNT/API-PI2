@@ -65,6 +65,20 @@ open class Personagem(nick: String, element: Int) {
         return jogador.maxVelocidade
     }
 
+    fun calcularDano(nivelAtacante: Int, poderAtaque: Int, statusAtaqueAtacante: Int, statusDefesaVitima: Int): Int{ //Função que calcula o dano de um ataque
+
+        var dano = ((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2 //Ajustar quando decidimos sobre vantagens elementares e etc
+
+        return dano
+    }
+
+    fun calcularCura(nivelAtacante: Int, poderAtaque: Int, statusMaxManaAtacante: Int): Int{
+
+        var dano = ((nivelAtacante * poderAtaque) * statusMaxManaAtacante) / 200 //Valor divisor a ser ajustado com testes de balanceamento
+
+        return dano
+    }
+
     //INTERFACES?
     protected open fun genId(rpgAtual: Rpg): Int {
         return 0

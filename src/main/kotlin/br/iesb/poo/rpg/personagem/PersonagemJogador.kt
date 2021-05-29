@@ -45,13 +45,34 @@ class PersonagemJogador(
         return novaId
     }
 
+    private fun definirStatusBase(){ //Inicialização dos statusBase
+
+        if (classe == 1) {
+
+            this.maxVida = 5
+            this.maxMana = 5
+            this.maxAtaque = 6
+            this.maxDefesa = 5
+            this.maxVelocidade = 7
+
+        } else {
+
+            this.maxVida = 7
+            this.maxMana = 5
+            this.maxAtaque = 6
+            this.maxDefesa = 5
+            this.maxVelocidade = 5
+
+        }
+    }
+
     private fun morrerJogador(rpg: Rpg): String {
 
         rpg.jogadores.remove(rpg.jogadores.find { it.id == this.id })
         return "\n[ ✝ ] VOCÊ MORREU, SEU PERSONAGEM FOI DELETADO\n"
     }
 
-    override fun derrota(rpg: Rpg): String {
+    override fun derrota(rpg: Rpg): String { //Sugestão: retirar o negócio da redução de vida, manter a consequêcia do dinhiero
 
         this.vida--
         this.dinheiro = this.dinheiro / 2
@@ -104,7 +125,8 @@ class PersonagemJogador(
         // LOOP PARA CALCULAR XP NECESSÁRIO PARA O PRÓXIMO NÍVEL
         do {
             i++
-            xpProxNv += i * 100
+            xpProxNv += i * 100 //Sugestão: Mudar o numero multiplicado por 500, para não facilitar o aumento de nível, mas tbm não deixar muito dificil
+                                //Colocar o While pra pegar o i até chegar no nível seguinte do nível atual, ou seja, fazer this.nivel + 1
         } while (i in 1 until this.nivel)
 
         // LOOP PARA ATUALIZAR NÍVEL DO PERSONAGEM CASO GANHE XP SUFICIENTE PARA MAIS DE UMA EVOLUÇÃO
@@ -148,12 +170,12 @@ class PersonagemJogador(
 
         var log = "\n[ ↑ ] VOCÊ UPOU E AGORA ESTÁ NO NÍVEL ${this.nivel}\n"
 
-        if (vida < 5) {
-            this.vida++
-
-            log += "\n[ ♥ ] JUNTO COM A EXPERIÊNCIA ADQUIRIDA VOCÊ SE SENTE REVIGORADO, SUA VIDA AGORA É ${this.vida}\n"
-
-        }
+//        if (vida < 5) {
+//            this.vida++
+//
+//            log += "\n[ ♥ ] JUNTO COM A EXPERIÊNCIA ADQUIRIDA VOCÊ SE SENTE REVIGORADO, SUA VIDA AGORA É ${this.vida}\n"
+//
+//        }
         return log
     }
 
