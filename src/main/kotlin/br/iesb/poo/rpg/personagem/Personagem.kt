@@ -35,7 +35,12 @@ open class Personagem(nick: String, element: Int) {
     var statusBaseDefesa: Int = 1
     var statusBaseVelocidade: Int = 1
 
-    // Água - 1; Fogo - 2; Ar - 3; Terra - 4;
+    private var stab: Int = 2
+    var bonusEfetivo: Int = 2
+
+
+    // Água - 1; Fogo - 2; Natureza - 3; Luz - 4; Escuridão - 5;
+    // Água > Fogo > Natureza > Água || Luz > Escuridão > Luz
     // Água > Fogo > Ar > Terra > Água [...]
 
     var elemento: Int = element
@@ -65,18 +70,67 @@ open class Personagem(nick: String, element: Int) {
         return jogador.maxVelocidade
     }
 
-    fun calcularDano(nivelAtacante: Int, poderAtaque: Int, statusAtaqueAtacante: Int, statusDefesaVitima: Int): Int{ //Função que calcula o dano de um ataque
+    fun calcularDano(nivelAtacante: Int,
+                     poderAtaque: Int,
+                     statusAtaqueAtacante: Int,
+                     statusDefesaVitima: Int,
+                     elementoAtaque: Int,
+                     elementoAtacante: Int,
+                     elementoVitima: Int): Int{ //Função que calcula o dano de um ataque
 
-        var dano = ((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2 //Ajustar quando decidimos sobre vantagens elementares e etc
+        if(elementoAtaque == elementoAtacante){
 
-        return dano
+            if(elementoAtacante == 1 && elementoVitima == 2){
+
+                return (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab * bonusEfetivo
+
+            }
+            else if(elementoAtacante == 2 && elementoVitima == 3){
+
+                return (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab * bonusEfetivo
+
+            }
+            else if(elementoAtacante == 3 && elementoVitima == 1){
+
+                return (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab * bonusEfetivo
+
+            }
+            else if(elementoAtacante == 4 && elementoVitima == 5){
+
+                return (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab * bonusEfetivo
+
+            }
+            else if(elementoAtacante == 5 && elementoVitima == 4){
+
+                return (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab * bonusEfetivo
+
+            }
+            else{ //Vai ser só o STAB
+
+                return (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
+
+            }
+        }
+        else {
+
+            return ((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante) / statusDefesaVitima) / 50) + 2
+        }
+
     }
 
-    fun calcularCura(nivelAtacante: Int, poderAtaque: Int, statusMaxManaAtacante: Int): Int{
 
-        var dano = ((nivelAtacante * poderAtaque) * statusMaxManaAtacante) / 200 //Valor divisor a ser ajustado com testes de balanceamento
+    fun calcularCura(nivelAtacante: Int, poderAtaque: Int, statusMaxManaAtacante: Int, elementoAtacante: Int): Int{
 
-        return dano
+        if(elementoAtacante == 4){
+
+            return (((nivelAtacante * poderAtaque) * statusMaxManaAtacante) / 200) * stab
+
+        }
+        else{
+
+            return ((nivelAtacante * poderAtaque) * statusMaxManaAtacante) / 200 //Valor divisor a ser ajustado com testes de balanceamento
+        }
+
     }
 
     //INTERFACES?
