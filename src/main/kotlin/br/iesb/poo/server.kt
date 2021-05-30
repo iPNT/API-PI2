@@ -73,9 +73,18 @@ fun main() {
                         atributos.elemento,
                         RPG
                 )
+                novojogador.definirStatusBase()
+
                 RPG.jogadores.add(novojogador)
                 call.respondText(
-                        "Criado com sucesso ${if (novojogador.classe == 1) "Arqueiro" else "Cavaleiro"} ${novojogador.nome} de ID: ${novojogador.id}",
+                        "Criado com sucesso ${if (novojogador.classe == 1){
+                            "Arqueiro"
+                        } else if (novojogador.classe == 2){
+                            "Cavaleiro"
+                        } else{
+                            "Mago"
+                        }
+                        } ${novojogador.nome} de ID: ${novojogador.id}",
                         status = HttpStatusCode.Created
                 )
             }

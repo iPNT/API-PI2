@@ -22,6 +22,7 @@ class PersonagemJogador(
     var durabilidadedefesa : Int = 0
     var ataqueitem: Int = 0
     var defesaitem: Int = 0
+    var pontosSabedoria: Float = 0.1f
 
 //    val inventario = arrayOf<Array<String>>() //[Item,Quantidade]
 
@@ -45,68 +46,78 @@ class PersonagemJogador(
         return novaId
     }
 
-    private fun definirStatusBase(){ //Inicialização dos statusBase
+    fun definirStatusBase(){ //Inicialização dos statusBase
+
+        this.maxAtaque = 6
+        this.statusBaseAtaque = 6
+        this.pontosSabedoria = 0.0f
 
         if (classe == 1) {
 
             this.maxVida = 5
-            this.maxMana = 5
-            this.maxAtaque = 6
-            this.maxDefesa = 5
+            this.maxMana = 6
+            this.maxDefesa = 6
             this.maxVelocidade = 7
 
-        } else {
+            this.statusBaseVida = 5
+            this.statusBaseMana = 6
+            this.statusBaseDefesa = 6
+            this.statusBaseVelocidade = 7
+
+
+        } else if (classe == 2){
 
             this.maxVida = 7
             this.maxMana = 5
-            this.maxAtaque = 6
+            this.maxDefesa = 6
+            this.maxVelocidade = 6
+
+            this.statusBaseVida = 7
+            this.statusBaseMana = 5
+            this.statusBaseDefesa = 6
+            this.statusBaseVelocidade = 6
+
+        }
+        else{
+
+            this.maxVida = 6
+            this.maxMana = 7
             this.maxDefesa = 5
-            this.maxVelocidade = 5
+            this.maxVelocidade = 6
+
+            this.statusBaseVida = 6
+            this.statusBaseMana = 7
+            this.statusBaseDefesa = 5
+            this.statusBaseVelocidade = 6
 
         }
     }
 
-    private fun morrerJogador(rpg: Rpg): String {
-
-        rpg.jogadores.remove(rpg.jogadores.find { it.id == this.id })
-        return "\n[ ✝ ] VOCÊ MORREU, SEU PERSONAGEM FOI DELETADO\n"
-    }
+//    private fun morrerJogador(rpg: Rpg): String {
+//
+//        rpg.jogadores.remove(rpg.jogadores.find { it.id == this.id })
+//        return "\n[ ✝ ] VOCÊ MORREU, SEU PERSONAGEM FOI DELETADO\n"
+//    }
 
     override fun derrota(rpg: Rpg): String { //Sugestão: retirar o negócio da redução de vida, manter a consequêcia do dinhiero
 
-        this.vida--
-        this.dinheiro = this.dinheiro / 2
+        var dinheiroRoubado = this.dinheiro / 2 //Arrumar depois
 
-        var log = "\n[ :c ] VOCE TEM ${this.vida} VIDAS RESTANTES\n"
+        this.dinheiro = dinheiroRoubado
 
-        log += if (this.vida <= 0) {
+        var log = "\n[ :c ] VOCE DESMAIOU E PERDEU ${dinheiroRoubado} de dinheiro\n"
 
-            this.morrerJogador(rpg)
-
-        } else {
-
-            "[ :0 ] VOCÊ FOI OBLITERADO E RESTARAM ${this.dinheiro} MOEDAS DE OURO\n"
-
-        }
         return log
     }
 
     fun derrotaChefe(rpg: Rpg): String {
 
-        this.vida = this.vida - 2
-        this.dinheiro = this.dinheiro / 10
+        var dinheiroRoubado = this.dinheiro / 10 //Arrumar depois
 
-        var log = "\n[ :c ] VOCE TEM ${this.vida} VIDAS RESTANTES\n"
+        this.dinheiro = dinheiroRoubado
 
-        log += if (this.vida <= 0) {
+        var log = "\n[ :c ] VOCE DESMAIOU E PERDEU ${dinheiroRoubado} de dinheiro\n"
 
-            this.morrerJogador(rpg)
-
-        } else {
-
-            "[ :0 ] VOCÊ FOI OBLITERADO E RESTARAM ${this.dinheiro} MOEDAS DE OURO\n"
-
-        }
         return log
     }
 
@@ -150,6 +161,16 @@ class PersonagemJogador(
     private fun nivelUp(): String { //Será utilizada a mesma fórmula usada para calcular os status dos monstros: ((2 * statusBase) * nivel)/100 + nivel + 10
                                     //obs: caso o personagem tenha alguma vantagem com um atributo, adicionar + 2, caso tenha desvantagem com um atributo, diminuir - 2
 
+        if((1..100).random() >= 90){
+
+            this.pontosSabedoria += 1.0f
+        }
+        else{
+
+            this.pontosSabedoria += 0.5f
+        }
+
+
         if (classe == 1) {
 
             this.maxVida += ((2 * statusBaseVida) * nivel)/100 + nivel + 8
@@ -158,7 +179,7 @@ class PersonagemJogador(
             this.maxDefesa += ((2 * statusBaseDefesa) * nivel)/100 + nivel + 10
             this.maxVelocidade += ((2 * statusBaseVelocidade) * nivel)/100 + nivel + 12
 
-        } else {
+        } else if (classe == 2){
 
             this.maxVida += ((2 * statusBaseVida) * nivel)/100 + nivel + 10
             this.maxMana += ((2 * statusBaseMana) * nivel)/100 + nivel + 8
@@ -166,16 +187,19 @@ class PersonagemJogador(
             this.maxDefesa += ((2 * statusBaseDefesa) * nivel)/100 + nivel + 10
             this.maxVelocidade += ((2 * statusBaseVelocidade) * nivel)/100 + nivel + 10
 
+        } else {
+
+            this.maxVida += ((2 * statusBaseVida) * nivel)/100 + nivel + 10
+            this.maxMana += ((2 * statusBaseMana) * nivel)/100 + nivel + 12
+            this.maxAtaque += ((2 * statusBaseAtaque) * nivel)/100 + nivel + 10
+            this.maxDefesa += ((2 * statusBaseDefesa) * nivel)/100 + nivel + 8
+            this.maxVelocidade += ((2 * statusBaseVelocidade) * nivel)/100 + nivel + 10
         }
+
 
         var log = "\n[ ↑ ] VOCÊ UPOU E AGORA ESTÁ NO NÍVEL ${this.nivel}\n"
 
-//        if (vida < 5) {
-//            this.vida++
-//
-//            log += "\n[ ♥ ] JUNTO COM A EXPERIÊNCIA ADQUIRIDA VOCÊ SE SENTE REVIGORADO, SUA VIDA AGORA É ${this.vida}\n"
-//
-//        }
+
         return log
     }
 

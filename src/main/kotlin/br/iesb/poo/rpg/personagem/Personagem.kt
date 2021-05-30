@@ -41,7 +41,6 @@ open class Personagem(nick: String, element: Int) {
 
     // Água - 1; Fogo - 2; Natureza - 3; Luz - 4; Escuridão - 5;
     // Água > Fogo > Natureza > Água || Luz > Escuridão > Luz
-    // Água > Fogo > Ar > Terra > Água [...]
 
     var elemento: Int = element
 
@@ -78,44 +77,150 @@ open class Personagem(nick: String, element: Int) {
                      elementoAtacante: Int,
                      elementoVitima: Int): Int{ //Função que calcula o dano de um ataque
 
-        if(elementoAtaque == elementoAtacante){
+        if(elementoAtaque != elementoAtacante) {
 
-            if(elementoAtacante == 1 && elementoVitima == 2){
+            stab = 1
 
-                return (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab * bonusEfetivo
-
-            }
-            else if(elementoAtacante == 2 && elementoVitima == 3){
-
-                return (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab * bonusEfetivo
-
-            }
-            else if(elementoAtacante == 3 && elementoVitima == 1){
-
-                return (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab * bonusEfetivo
-
-            }
-            else if(elementoAtacante == 4 && elementoVitima == 5){
-
-                return (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab * bonusEfetivo
-
-            }
-            else if(elementoAtacante == 5 && elementoVitima == 4){
-
-                return (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab * bonusEfetivo
-
-            }
-            else{ //Vai ser só o STAB
-
-                return (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
-
-            }
-        }
-        else {
-
-            return ((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante) / statusDefesaVitima) / 50) + 2
         }
 
+            //INICIO AGUA
+
+        var dano: Int = 0
+
+            if(elementoAtaque == 1 && elementoVitima == 1){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
+
+            } else if(elementoAtaque == 1 && elementoVitima == 2){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab * bonusEfetivo
+
+
+            } else if(elementoAtaque == 1 && elementoVitima == 3){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab * 1/2
+
+
+            } else if(elementoAtaque == 1 && elementoVitima == 4){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
+
+
+            } else if(elementoAtaque == 1 && elementoVitima == 5){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
+
+            }
+
+            //INICIO FOGO
+
+            else if(elementoAtaque == 2 && elementoVitima == 1){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab * 1/2
+
+            } else if(elementoAtaque == 2 && elementoVitima == 2){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
+
+
+            } else if(elementoAtaque == 2 && elementoVitima == 3){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab * bonusEfetivo
+
+
+            } else if(elementoAtaque == 2 && elementoVitima == 4){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
+
+
+            } else if(elementoAtaque == 2 && elementoVitima == 5){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
+
+            }
+
+            //INICIO NATUREZA
+
+            else if(elementoAtaque == 3 && elementoVitima == 1){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab * bonusEfetivo
+
+            } else if(elementoAtaque == 3 && elementoVitima == 2){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab * 1/2
+
+
+            } else if(elementoAtaque == 3 && elementoVitima == 3){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
+
+
+            } else if(elementoAtaque == 3 && elementoVitima == 4){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
+
+
+            } else if(elementoAtaque == 3 && elementoVitima == 5){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
+
+            }
+
+            //INICIO LUZ
+
+            else if(elementoAtaque == 4 && elementoVitima == 1){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
+
+            } else if(elementoAtaque == 4 && elementoVitima == 2){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
+
+
+            } else if(elementoAtaque == 4 && elementoVitima == 3){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
+
+
+            } else if(elementoAtaque == 4 && elementoVitima == 4){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
+
+
+            } else if(elementoAtaque == 4 && elementoVitima == 5){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab * bonusEfetivo
+
+            }
+
+            //INICIO ESCURIDAO
+
+            else if(elementoAtaque == 5 && elementoVitima == 1){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
+
+            } else if(elementoAtaque == 5 && elementoVitima == 2){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
+
+
+            } else if(elementoAtaque == 5 && elementoVitima == 3){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
+
+
+            } else if(elementoAtaque == 5 && elementoVitima == 4){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab * bonusEfetivo
+
+
+            } else if(elementoAtaque == 5 && elementoVitima == 5){
+
+                dano = (((((2 * nivelAtacante) + 2) * poderAtaque * (statusAtaqueAtacante)/statusDefesaVitima) / 50) + 2) * stab
+
+            }
+
+        return dano
     }
 
 
