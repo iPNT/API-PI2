@@ -6,57 +6,82 @@ class PersonagemMonstro(
         novaRaca: Int,
         nomeMonstro: String,
         elementoMonstro: Int,
-        jogadorBase: PersonagemJogador,
         rpgAtual: Rpg
 ) : Personagem(nomeMonstro, elementoMonstro) {
 
-    // Orc = 0; Goblin = 1;
-    // Orc + Defesa; Goblin + Ataque
-
     var raca: Int = 0
     var derrotado = false
+
+    var nivelMasmorra: Int = 0
+
+    fun definirStatusBase(){ //Inicialização dos statusBase
+
+        this.maxAtaque = 6
+        this.statusBaseAtaque = 6
+        this.pontosSabedoria = 0.0f
+
+        if (classe == 1) {
+
+            nivelMasmorra += (-2..2).random()
+
+            this.maxVida = 6
+            this.maxMana = 6
+            this.maxDefesa = 6
+            this.maxVelocidade = 5
+
+            this.maxAtaque = 6
+            this.statusBaseAtaque = 6
+
+            this.statusBaseVida = 6
+            this.statusBaseMana = 6
+            this.statusBaseDefesa = 6
+            this.statusBaseVelocidade = 6
+
+
+        } else{
+
+            this.maxVida = 10
+            this.maxMana = 10
+            this.maxDefesa = 10
+            this.maxVelocidade = 1
+
+            this.statusBaseVida = 10
+            this.statusBaseMana = 10
+            this.statusBaseDefesa = 10
+            this.statusBaseVelocidade = 10
+
+        }
+    }
 
     init {
 
         id = genId(rpgAtual)
         raca = novaRaca
-        if (jogadorBase.nivel > 3){
-        this.nivel = ((jogadorBase.nivel - 2)..(jogadorBase.nivel) + 2).random()
-        } else{
-            this.nivel = (jogadorBase.nivel)
+
+        this.maxAtaque = 6
+        this.statusBaseAtaque = 6
+
+        this.maxVida = 5
+        this.maxMana = 6
+        this.maxDefesa = 6
+        this.maxVelocidade = 7
+
+        this.statusBaseVida = 5
+        this.statusBaseMana = 6
+        this.statusBaseDefesa = 6
+        this.statusBaseVelocidade = 7
+
+        private fun statusMonstro(): String { //Será utilizada a mesma fórmula usada para calcular os status dos monstros: ((2 * statusBase) * nivel)/100 + nivel + 10
+            //obs: caso o personagem tenha alguma vantagem com um atributo, adicionar + 2, caso tenha desvantagem com um atributo, diminuir - 2
+
+            this.maxVida += ((2 * statusBaseVida) * nivelMasmorra)/100 + nivel + 8
+            this.maxMana += ((2 * statusBaseMana) * nivelMasmorra)/100 + nivel + 10
+            this.maxAtaque += ((2 * statusBaseAtaque) * nivelMasmorra)/100 + nivel + 10
+            this.maxDefesa += ((2 * statusBaseDefesa) * nivelMasmorra)/100 + nivel + 10
+            this.maxVelocidade += ((2 * statusBaseVelocidade) * nivelMasmorra)/100 + nivel + 12
+
         }
 
-        if (novaRaca == 0 || novaRaca == 1) {
-
-            dinheiro = (this.nivel * (1..2).random())
-
-            if (raca == 1) {
-                if (elemento % 2 == 0) {
-                    this.ataque = ((1..2).random() * this.nivel)
-                    this.defesa = (1 * this.nivel)
-                } else {
-                    this.ataque = (2 * this.nivel)
-                    this.defesa = (2 * this.nivel)
-                }
-            } else {
-                if (elemento % 2 == 0) {
-                    this.ataque = (2 * this.nivel)
-                    this.defesa = (2 * this.nivel)
-                } else {
-                    this.ataque = (1 * this.nivel)
-                    this.defesa = ((1..2).random() * this.nivel)
-                }
-            }
-
-        } else if(novaRaca == 2){
-            this.ataque = 0
-            this.defesa = (this.nivel * 10)
-            dinheiro = (this.nivel) * (this.nivel * (2..3).random())
-        } else{
-            this.ataque = ((5..10).random() * this.nivel)
-            this.defesa = ((5..10).random() * this.nivel)
-            dinheiro = (this.nivel) * (this.nivel * (5..6).random())
-        }
     }
 
     override fun genId(rpgAtual: Rpg): Int {

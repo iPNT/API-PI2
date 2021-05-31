@@ -226,15 +226,19 @@ open class Personagem(nick: String, element: Int) {
 
     fun calcularCura(nivelAtacante: Int, poderAtaque: Int, statusMaxManaAtacante: Int, elementoAtacante: Int): Int{
 
+        var cura: Int = 0
+
         if(elementoAtacante == 4){
 
-            return (((nivelAtacante * poderAtaque) * statusMaxManaAtacante) / 200) * stab
+            cura = (((nivelAtacante * poderAtaque) * statusMaxManaAtacante) / 200) * stab
 
         }
         else{
 
-            return ((nivelAtacante * poderAtaque) * statusMaxManaAtacante) / 200 //Valor divisor a ser ajustado com testes de balanceamento
+            cura = ((nivelAtacante * poderAtaque) * statusMaxManaAtacante) / 200 //Valor divisor a ser ajustado com testes de balanceamento
         }
+
+        return cura
 
     }
 
