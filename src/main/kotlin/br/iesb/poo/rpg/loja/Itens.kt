@@ -26,6 +26,8 @@ open class Itens(
 
     var qtd: Int = 0
 
+    var danoMagico: Int = 0
+
 
     init {
 
@@ -71,7 +73,27 @@ open class Itens(
         } else if (eff[0] == "def") {
             jogador.defesaitem = jogador.defesaitem + eff[1].toInt()
             jogador.durabilidadedefesa = jogador.durabilidadedefesa + 3
+
+        } else if (eff[0] == "fg") {
+            danoMagico = eff[1].toInt()
+
+        } else if (eff[0] == "ag") {
+            danoMagico = eff[1].toInt()
+
+        } else if (eff[0] == "nt") {
+            danoMagico = eff[1].toInt()
+
+        } else if (eff[0] == "lz") {
+            danoMagico = eff[1].toInt()
+
+        } else if (eff[0] == "es") {
+            danoMagico = eff[1].toInt()
+
+        } else if (eff[0] == "cr") {
+            danoMagico = eff[1].toInt()
+
         }
+
     }
 
 

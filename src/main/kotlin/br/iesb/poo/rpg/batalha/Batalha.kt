@@ -11,6 +11,7 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
     val racaMonstro = arrayOf("Orc", "Goblin", "Gnomio")
     val afinidade = arrayOf("ÁGUA", "FOGO", "AR", "TERRA")
+    var batalhaRolando = true
 
     var log =
         "--BATALHA DE NÚMERO ${jogador.batalhas}--\n" +
@@ -21,11 +22,26 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
     log += "[ ~ ] MONSTRO COM ELEMENTO ${afinidade[monstro.elemento-1]}\n"
     log += "[ ~ ] JOGADOR COM ELEMENTO ${afinidade[jogador.elemento-1]}\n"
 
+
+
     var ataqueJ: Int = jogador.ataque + jogador.ataqueitem
     var ataqueM: Int = monstro.ataque
 
     var defesaJ: Int = jogador.defesa + jogador.defesaitem
     var defesaM: Int = monstro.defesa
+
+    jogador.pontosVida = jogador.maxVida
+    jogador.pontosMana = jogador.maxMana
+    jogador.ataque = jogador.maxAtaque
+    jogador.defesa = jogador.maxDefesa
+    jogador.velocidade = jogador.maxVelocidade
+
+    monstro.pontosVida = monstro.maxVida
+    monstro.pontosMana = monstro.maxMana
+    monstro.ataque = monstro.maxAtaque
+    monstro.defesa = monstro.maxDefesa
+    monstro.velocidade = monstro.maxVelocidade
+
 
     log += "[ i ] MONSTRO INICIAL - ATAQUE $ataqueM /// DEFESA ${defesaM}\n"
     log += "[ i ] JOGADOR INICIAL - ATAQUE $ataqueJ /// DEFESA ${defesaJ}\n"
@@ -64,18 +80,22 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
     val INICIOTURNO = 7
 
-    if (INICIOTURNO + jogador.sorte > iniciativaM) {
+    if (INICIOTURNO + jogador.sorte > iniciativaM) { // if(jogador.velocidade > monstro.velocidade)
         log += "[ * ] JOGADOR INICIOU O COMBATE\n\n"
 
-        while (defesaJ > 0 || defesaM > 0) {
+        while (batalhaRolando) { //Para batalha, a gente vai fazer um switch case para as opções que o jogador pode fazer
+                                             // Nesse caso, vai ter 4 opções: Atacar, Magia, Inventário, Fugir
+                                             // invés de conferir os pontos de vida pelo while, podemos fazer um if que faz esse conferencia, e caso foi verdadeiro, a gente muda a váriavel do while para false, assim ele para a batalha
+                                             // então, vai ser: while (batalhaRolando = true) ai no fim da batalha, batalhaRolando = false, saindo do while
             defesaM -= ataqueJ
             log += "TURNO ${turno}: JOGADOR ATACOU COM $ataqueJ MONSTRO FICOU COM $defesaM DE DEFESA\n"
 
-            if (defesaM <= 0) {
+            if (monstro.pontosVida <= 0) {
                 log += "\n[ = ] JOGADOR GANHOU\n"
                 log += monstro.derrota(RPG)
                 log += jogador.vitoria(monstro)
-                break
+                break //break faz a msm funcao do rolando, mas ai a gente vê qual a melhor opcao
+                //batalhaRolando = false
             }
 
             defesaJ -= ataqueM
@@ -83,10 +103,11 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
             turno++
 
-            if (defesaJ <= 0) {
+            if (jogador.pontosVida <= 0) {
                 log += "\n[ = ] JOGADOR PERDEU\n"
                 log += jogador.derrota(RPG)
                 break
+                //batalhaRolando = false
             }
         }
 
@@ -94,11 +115,11 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
     } else {
         log += "[ * ] EMBOSCADA! MONSTRO INICIOU O COMBATE\n\n"
 
-        while (defesaM > 0 || defesaJ > 0) {
+        while (batalhaRolando) {
             defesaJ -= ataqueM
             log += "TURNO ${turno}: MONSTRO ATACOU COM $ataqueM JOGADOR FICOU COM ${defesaJ}\n"
 
-            if (defesaJ <= 0) {
+            if (jogador.pontosVida <= 0) {
                 log += "\n[ = ] JOGADOR PERDEU\n"
                 log += jogador.derrota(RPG)
                 break
@@ -109,7 +130,7 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
             turno++
 
-            if (defesaM <= 0) {
+            if (monstro.pontosVida <= 0) {
                 log += "\n[ = ] JOGADOR GANHOU\n"
                 log += monstro.derrota(RPG)
                 log += jogador.vitoria(monstro)

@@ -73,7 +73,7 @@ fun main() {
                         atributos.elemento,
                         RPG
                 )
-                novojogador.definirStatusBase()
+                novojogador.definirStatusBase() //Conferir com a Isa dps pra ver se faz sentido
 
                 RPG.jogadores.add(novojogador)
                 call.respondText(

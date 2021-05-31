@@ -18,9 +18,8 @@ class PersonagemMonstro(
 
         this.maxAtaque = 6
         this.statusBaseAtaque = 6
-        this.pontosSabedoria = 0.0f
 
-        if (classe == 1) {
+        if (raca == 1) {
 
             nivelMasmorra += (-2..2).random()
 
@@ -58,20 +57,8 @@ class PersonagemMonstro(
         id = genId(rpgAtual)
         raca = novaRaca
 
-        this.maxAtaque = 6
-        this.statusBaseAtaque = 6
 
-        this.maxVida = 5
-        this.maxMana = 6
-        this.maxDefesa = 6
-        this.maxVelocidade = 7
-
-        this.statusBaseVida = 5
-        this.statusBaseMana = 6
-        this.statusBaseDefesa = 6
-        this.statusBaseVelocidade = 7
-
-        private fun statusMonstro(): String { //Será utilizada a mesma fórmula usada para calcular os status dos monstros: ((2 * statusBase) * nivel)/100 + nivel + 10
+         fun statusMonstro(){ //Será utilizada a mesma fórmula usada para calcular os status dos monstros: ((2 * statusBase) * nivel)/100 + nivel + 10
             //obs: caso o personagem tenha alguma vantagem com um atributo, adicionar + 2, caso tenha desvantagem com um atributo, diminuir - 2
 
             this.maxVida += ((2 * statusBaseVida) * nivelMasmorra)/100 + nivel + 8

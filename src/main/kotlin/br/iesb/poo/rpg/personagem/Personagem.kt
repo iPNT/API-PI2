@@ -242,6 +242,13 @@ open class Personagem(nick: String, element: Int) {
 
     }
 
+    fun reduzMana(custoMagia: Int): Int {
+
+        var reducao: Int = custoMagia
+
+        return custoMagia
+    }
+
     //INTERFACES?
     protected open fun genId(rpgAtual: Rpg): Int {
         return 0
