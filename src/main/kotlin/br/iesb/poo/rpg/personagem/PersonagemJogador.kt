@@ -3,7 +3,7 @@ package br.iesb.poo.rpg.personagem
 import br.iesb.poo.rpg.Rpg
 import kotlin.collections.ArrayList
 
-class PersonagemJogador(
+open class PersonagemJogador(
     classeJogador: Int,
     nomeJogador: String,
     elementoJogador: Int,
@@ -91,20 +91,6 @@ class PersonagemJogador(
             this.statusBaseVelocidade = 6
 
         }
-    }
-
-
-
-
-    fun defenderPersonagem(defesaPersonagem: Int): Int{
-
-        var aumentoDefesa: Int = 20 //Valor a mudar no balanceamento
-        var defesaP: Int = defesaPersonagem
-
-        defesaP += aumentoDefesa
-
-        return defesaP
-
     }
 
     fun magiaPersonagem(){

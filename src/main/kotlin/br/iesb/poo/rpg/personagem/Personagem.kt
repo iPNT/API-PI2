@@ -292,6 +292,10 @@ open class Personagem(nick: String, element: Int) {
         return manaAtual
     }
 
+    fun usarMagia(){
+
+    }
+
 
     //INTERFACES?
     protected open fun genId(rpgAtual: Rpg): Int {

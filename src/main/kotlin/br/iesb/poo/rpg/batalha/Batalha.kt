@@ -102,7 +102,7 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
             when (opcaoJ) {
 
                 1 -> monstro.pontosVida = jogador.atacarPersonagem(jogador.maxAtaque, jogador.nivel, monstro.defesa, monstro.pontosVida) //Ataque Basico
-                2 -> jogador.defesa = jogador.defenderPersonagem(jogador.defesa) //opcao pro personagem defender
+                2 -> jogador.defesa = jogador.defender(jogador.defesa) //opcao pro personagem defender
                 3 -> batalhaRolando = jogador.fugirPersonagem(jogador.velocidade, monstro.velocidade) //opcao pro jogador fugir da batalha
                 //4 -> Magia
 
@@ -176,7 +176,7 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
             when (opcaoJ) {
 
                 1 -> monstro.pontosVida = monstro.atacarPersonagem(jogador.maxAtaque, jogador.nivel, monstro.defesa, monstro.pontosVida) //Ataque Basico
-                2 -> jogador.defesa = jogador.defenderPersonagem(jogador.defesa) //opcao pro personagem defender
+                2 -> jogador.defesa = jogador.defender(jogador.defesa) //opcao pro personagem defender
                 3 -> batalhaRolando = jogador.fugirPersonagem(jogador.velocidade, monstro.velocidade) //opcao pro jogador fugir da batalha
                 //4 -> Magia
 
