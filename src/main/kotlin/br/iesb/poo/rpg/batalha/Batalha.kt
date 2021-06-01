@@ -33,7 +33,8 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
     var dano: Int = 0
 
-    var opcao: Int = 0
+    var opcaoJ: Int = 0
+    var opcaoM: Int = 0
 
     jogador.pontosVida = jogador.maxVida
     jogador.pontosMana = jogador.maxMana
@@ -96,16 +97,18 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
             jogador.defesa = jogador.maxDefesa
             monstro.defesa = monstro.maxDefesa
 
-            when (opcao) {
 
-                1 -> monstro.pontosVida = monstro.atacarPersonagem(jogador.maxAtaque, jogador.nivel, monstro.defesa, monstro.pontosVida) //Ataque Basico
-                2 -> jogador.defesa = jogador.defenderPersonagem() //opcao pro personagem defender
-                //3 -> Magia
-                //4 -> Fuga
+            //TURNO JOGADOR
+            when (opcaoJ) {
+
+                1 -> monstro.pontosVida = jogador.atacarPersonagem(jogador.maxAtaque, jogador.nivel, monstro.defesa, monstro.pontosVida) //Ataque Basico
+                2 -> jogador.defesa = jogador.defenderPersonagem(jogador.defesa) //opcao pro personagem defender
+                3 -> batalhaRolando = jogador.fugirPersonagem(jogador.velocidade, monstro.velocidade) //opcao pro jogador fugir da batalha
+                //4 -> Magia
 
             }
 
-//            defesaM -= ataqueJ
+
             log += "TURNO ${turno}: JOGADOR ATACOU COM $ataqueJ MONSTRO FICOU COM $defesaM DE DEFESA\n"
 
             if (monstro.pontosVida <= 0) {
@@ -116,7 +119,17 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
                 //batalhaRolando = false
             }
 
-            defesaJ -= ataqueM
+            //TURNO MONSTRO
+
+            opcaoM = (1..3).random()
+
+            when(opcaoM) {
+
+                1 -> jogador.pontosVida = monstro.atacarPersonagem(monstro.maxAtaque, monstro.nivel, jogador.defesa, jogador.pontosVida) //Ataque Basico
+                2 -> monstro.defesa = monstro.defender(monstro.defesa) //opcao pro personagem defender
+                //3 -> Magia
+            }
+
             log += "TURNO ${turno}: MONSTRO ATACOU COM $ataqueM JOGADOR FICOU COM $defesaJ DE DEFESA\n"
 
             turno++
@@ -134,16 +147,42 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
         log += "[ * ] EMBOSCADA! MONSTRO INICIOU O COMBATE\n\n"
 
         while (batalhaRolando) {
-            defesaJ -= ataqueM
+
+            jogador.defesa = jogador.maxDefesa
+            monstro.defesa = monstro.maxDefesa
+
+            //TURNO MONSTRO
+
+            opcaoM = (1..3).random()
+
+            when(opcaoM) {
+
+                1 -> jogador.pontosVida = monstro.atacarPersonagem(monstro.maxAtaque, monstro.nivel, jogador.defesa, jogador.pontosVida) //Ataque Basico
+                2 -> monstro.defesa = monstro.defender(monstro.defesa) //opcao pro personagem defender
+                //3 -> Magia
+            }
+
+
             log += "TURNO ${turno}: MONSTRO ATACOU COM $ataqueM JOGADOR FICOU COM ${defesaJ}\n"
 
             if (jogador.pontosVida <= 0) {
                 log += "\n[ = ] JOGADOR PERDEU\n"
                 log += jogador.derrota(RPG)
                 break
+                //batalhaRolando = false
             }
 
-            defesaM -= ataqueJ
+            //TURNO JOGADOR
+            when (opcaoJ) {
+
+                1 -> monstro.pontosVida = monstro.atacarPersonagem(jogador.maxAtaque, jogador.nivel, monstro.defesa, monstro.pontosVida) //Ataque Basico
+                2 -> jogador.defesa = jogador.defenderPersonagem(jogador.defesa) //opcao pro personagem defender
+                3 -> batalhaRolando = jogador.fugirPersonagem(jogador.velocidade, monstro.velocidade) //opcao pro jogador fugir da batalha
+                //4 -> Magia
+
+            }
+
+
             log += "TURNO ${turno}: JOGADOR ATACOU COM $ataqueJ MONSTRO FICOU COM ${defesaM}\n"
 
             turno++
@@ -153,6 +192,7 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
                 log += monstro.derrota(RPG)
                 log += jogador.vitoria(monstro)
                 break
+                //batalhaRolando = false
             }
         }
 

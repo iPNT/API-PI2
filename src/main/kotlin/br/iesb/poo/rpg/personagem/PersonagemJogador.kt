@@ -96,11 +96,14 @@ class PersonagemJogador(
 
 
 
-    fun defenderPersonagem(): Int{
+    fun defenderPersonagem(defesaPersonagem: Int): Int{
 
         var aumentoDefesa: Int = 20 //Valor a mudar no balanceamento
+        var defesaP: Int = defesaPersonagem
 
-        return aumentoDefesa
+        defesaP += aumentoDefesa
+
+        return defesaP
 
     }
 

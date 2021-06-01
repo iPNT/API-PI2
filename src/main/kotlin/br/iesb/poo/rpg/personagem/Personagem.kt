@@ -249,17 +249,21 @@ open class Personagem(nick: String, element: Int) {
 
     }
 
-    fun defender(): Int {
+    fun defender(defesaPersonagem: Int): Int {
 
-        var aumentoDefesa: Int = 20
+        var aumentoDefesa: Int = 20 //Valor a mudar no balanceamento
+        var defesaP: Int = defesaPersonagem
 
-        return aumentoDefesa
+        defesaP += aumentoDefesa
+
+        return defesaP
     }
 
 
-    fun calcularCura(nivelAtacante: Int, poderAtaque: Int, statusMaxManaAtacante: Int, elementoAtacante: Int): Int{
+    fun calcularCura(vidaAtacante: Int, nivelAtacante: Int, poderAtaque: Int, statusMaxManaAtacante: Int, elementoAtacante: Int): Int{
 
         var cura: Int = 0
+        var aumentoVida: Int = vidaAtacante
 
         if(elementoAtacante == 4){
 
@@ -271,16 +275,23 @@ open class Personagem(nick: String, element: Int) {
             cura = ((nivelAtacante * poderAtaque) * statusMaxManaAtacante) / 200 //Valor divisor a ser ajustado com testes de balanceamento
         }
 
-        return cura
+        aumentoVida += cura
+
+        return aumentoVida
 
     }
 
-    fun reduzMana(custoMagia: Int): Int {
+
+    fun reduzMana(manaPersonagem: Int, custoMagia: Int): Int {
 
         var reducao: Int = custoMagia
+        var manaAtual: Int = manaPersonagem
 
-        return custoMagia
+        manaAtual -= reducao
+
+        return manaAtual
     }
+
 
     //INTERFACES?
     protected open fun genId(rpgAtual: Rpg): Int {
