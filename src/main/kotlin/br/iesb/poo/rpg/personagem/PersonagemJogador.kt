@@ -93,6 +93,38 @@ class PersonagemJogador(
         }
     }
 
+
+
+
+    fun defenderPersonagem(): Int{
+
+        var aumentoDefesa: Int = 20 //Valor a mudar no balanceamento
+
+        return aumentoDefesa
+
+    }
+
+    fun magiaPersonagem(){
+
+
+    }
+
+    fun fugirPersonagem(velocidadePersonagem: Int, velocidadeMonstro: Int): Boolean{
+
+        var batalhaRolando = true
+
+        if(velocidadePersonagem > velocidadeMonstro){
+
+            batalhaRolando = false
+
+            return batalhaRolando
+        }
+        else{
+
+            return batalhaRolando
+        }
+    }
+
 //    private fun morrerJogador(rpg: Rpg): String {
 //
 //        rpg.jogadores.remove(rpg.jogadores.find { it.id == this.id })

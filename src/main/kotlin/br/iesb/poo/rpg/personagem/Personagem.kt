@@ -224,6 +224,39 @@ open class Personagem(nick: String, element: Int) {
     }
 
 
+
+    fun calcularDanoBasico(nivelAtacante: Int,
+                           statusAtaqueAtacante: Int,
+                           statusDefesaVitima: Int): Int {
+
+        var dano: Int = 0
+
+        dano = (statusAtaqueAtacante - 2 .. statusAtaqueAtacante + 2).random() * (statusAtaqueAtacante / statusDefesaVitima)
+
+        return dano
+    }
+
+    fun atacarPersonagem(ataquePersonagem: Int, nivelPersonagem: Int, defesaInimigo: Int, vidaInimigo: Int): Int{
+
+        var dano: Int = 0
+        var hpInimigo: Int = vidaInimigo
+
+        dano = calcularDanoBasico(nivelPersonagem, ataquePersonagem, defesaInimigo)
+
+        hpInimigo = hpInimigo - dano
+
+        return hpInimigo
+
+    }
+
+    fun defender(): Int {
+
+        var aumentoDefesa: Int = 20
+
+        return aumentoDefesa
+    }
+
+
     fun calcularCura(nivelAtacante: Int, poderAtaque: Int, statusMaxManaAtacante: Int, elementoAtacante: Int): Int{
 
         var cura: Int = 0

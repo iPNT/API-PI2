@@ -5,6 +5,7 @@ import br.iesb.poo.rpg.Rpg
 import br.iesb.poo.rpg.TipoPersonagem
 import br.iesb.poo.rpg.personagem.PersonagemMonstro
 
+
 fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
     val monstro: PersonagemMonstro = RPG.criarMonstro(tipoPersonagem = TipoPersonagem.PERSONAGEM_MONSTRO, jogadorBaseBatalha = jogador)
@@ -29,6 +30,10 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
     var defesaJ: Int = jogador.defesa + jogador.defesaitem
     var defesaM: Int = monstro.defesa
+
+    var dano: Int = 0
+
+    var opcao: Int = 0
 
     jogador.pontosVida = jogador.maxVida
     jogador.pontosMana = jogador.maxMana
@@ -87,7 +92,20 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
                                              // Nesse caso, vai ter 4 opções: Atacar, Magia, Inventário, Fugir
                                              // invés de conferir os pontos de vida pelo while, podemos fazer um if que faz esse conferencia, e caso foi verdadeiro, a gente muda a váriavel do while para false, assim ele para a batalha
                                              // então, vai ser: while (batalhaRolando = true) ai no fim da batalha, batalhaRolando = false, saindo do while
-            defesaM -= ataqueJ
+
+            jogador.defesa = jogador.maxDefesa
+            monstro.defesa = monstro.maxDefesa
+
+            when (opcao) {
+
+                1 -> monstro.pontosVida = monstro.atacarPersonagem(jogador.maxAtaque, jogador.nivel, monstro.defesa, monstro.pontosVida) //Ataque Basico
+                2 -> jogador.defesa = jogador.defenderPersonagem() //opcao pro personagem defender
+                //3 -> Magia
+                //4 -> Fuga
+
+            }
+
+//            defesaM -= ataqueJ
             log += "TURNO ${turno}: JOGADOR ATACOU COM $ataqueJ MONSTRO FICOU COM $defesaM DE DEFESA\n"
 
             if (monstro.pontosVida <= 0) {
