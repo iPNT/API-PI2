@@ -29,6 +29,11 @@ open class Itens(
     var danoMagico: Int = 0
 
     var vidaTemp: Int = 0
+    var atkTemp: Int = 0
+    var defTemp: Int = 0
+    var velTemp: Int = 0
+    var manaTemp: Int = 0
+
 
 
     init {
@@ -65,40 +70,57 @@ open class Itens(
 
     open fun efeito(jogador: PersonagemJogador, id: String?) {
         var eff = buscar(id)[3].split(".") as ArrayList<String>
+
         if (eff[0] == "hp") { //jogador.eff[0]
             vidaTemp = jogador.maxVida + eff[1].toInt()
             jogador.maxVida = vidaTemp
 
-        } else if (eff[0] == "atk") {
-            jogador.ataqueitem = jogador.ataqueitem + eff[1].toInt()
-            jogador.durabilidadeataque = jogador.durabilidadeataque + 3
+        } else if (eff[0] == "mp") {
+            manaTemp = jogador.maxMana + eff[1].toInt()
+            jogador.maxMana = manaTemp
 
-        } else if (eff[0] == "def") {
-            jogador.defesaitem = jogador.defesaitem + eff[1].toInt()
-            jogador.durabilidadedefesa = jogador.durabilidadedefesa + 3
+        } else if (eff[0] == "at") {
+            atkTemp = jogador.maxAtaque + eff[1].toInt()
+            jogador.maxAtaque = atkTemp
 
-        } else if (eff[0] == "fg") {
-            danoMagico = eff[1].toInt()
+        } else if (eff[0] == "df") {
+            defTemp = jogador.maxDefesa + eff[1].toInt()
+            jogador.maxDefesa = defTemp
 
-        } else if (eff[0] == "ag") {
-            danoMagico = eff[1].toInt()
-
-        } else if (eff[0] == "nt") {
-            danoMagico = eff[1].toInt()
-
-        } else if (eff[0] == "lz") {
-            danoMagico = eff[1].toInt()
-
-        } else if (eff[0] == "es") {
-            danoMagico = eff[1].toInt()
-
-        } else if (eff[0] == "cr") {
-            danoMagico = eff[1].toInt()
+        } else if (eff[0] == "vl") {
+            velTemp = jogador.maxVelocidade + eff[1].toInt()
+            jogador.maxVelocidade = velTemp
 
         }
 
     }
 
+    open fun upMagias(jogador: PersonagemJogador, id: String?) {
+        var eff = buscar(id)[3].split(".") as ArrayList<String>
+
+        if (eff[0] == "fg") {
+            vidaTemp = jogador.maxVida + eff[1].toInt()
+            jogador.maxVida = vidaTemp
+
+        } else if (eff[0] == "mp") {
+            manaTemp = jogador.maxMana + eff[1].toInt()
+            jogador.maxMana = manaTemp
+
+        } else if (eff[0] == "at") {
+            atkTemp = jogador.maxAtaque + eff[1].toInt()
+            jogador.maxAtaque = atkTemp
+
+        } else if (eff[0] == "df") {
+            defTemp = jogador.maxDefesa + eff[1].toInt()
+            jogador.maxDefesa = defTemp
+
+        } else if (eff[0] == "vl") {
+            velTemp = jogador.maxVelocidade + eff[1].toInt()
+            jogador.maxVelocidade = velTemp
+
+        }
+
+    }
 
 }
 

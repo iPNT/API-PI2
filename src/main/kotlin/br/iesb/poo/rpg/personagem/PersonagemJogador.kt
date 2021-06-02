@@ -93,11 +93,6 @@ open class PersonagemJogador(
         }
     }
 
-    fun magiaPersonagem(){
-
-
-    }
-
     fun fugirPersonagem(velocidadePersonagem: Int, velocidadeMonstro: Int): Boolean{
 
         var batalhaRolando = true

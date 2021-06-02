@@ -10,6 +10,7 @@ open class Personagem(nick: String, element: Int) {
     var sorte: Int = 0
     var nivel: Int = 1
     var dinheiro: Int = 10
+    var magia: Int = 0
 
     //Vai ser o local aonde vai armazenar as mudanças definitivas nos status
 
@@ -86,6 +87,7 @@ open class Personagem(nick: String, element: Int) {
             //INICIO AGUA
 
         var dano: Int = 0
+        var retorno: Int = 0
 
             if(elementoAtaque == 1 && elementoVitima == 1){
 
@@ -243,9 +245,8 @@ open class Personagem(nick: String, element: Int) {
 
         dano = calcularDanoBasico(nivelPersonagem, ataquePersonagem, defesaInimigo)
 
-        hpInimigo = hpInimigo - dano
+        return dano
 
-        return hpInimigo
 
     }
 
@@ -281,6 +282,25 @@ open class Personagem(nick: String, element: Int) {
 
     }
 
+    fun usarMagia(nivelAtacante: Int,
+                  poderAtaque: Int,
+                  statusAtaqueAtacante: Int,
+                  statusDefesaVitima: Int,
+                  elementoAtaque: Int,
+                  elementoAtacante: Int,
+                  elementoVitima: Int,
+                  vidaAtacante: Int){
+
+        when (magia){
+            1-> calcularDano(nivelAtacante, poderAtaque, statusAtaqueAtacante, statusDefesaVitima, 1, elementoAtacante, elementoVitima)
+            2-> calcularDano(nivelAtacante, poderAtaque, statusAtaqueAtacante, statusDefesaVitima, 2, elementoAtacante, elementoVitima)
+            3-> calcularDano(nivelAtacante, poderAtaque, statusAtaqueAtacante, statusDefesaVitima, 3, elementoAtacante, elementoVitima)
+            4-> calcularDano(nivelAtacante, poderAtaque, statusAtaqueAtacante, statusDefesaVitima, 4, elementoAtacante, elementoVitima)
+            5-> calcularDano(nivelAtacante, poderAtaque, statusAtaqueAtacante, statusDefesaVitima, 5, elementoAtacante, elementoVitima)
+            6-> pontosVida = calcularCura(vidaAtacante, nivelAtacante, poderAtaque, statusAtaqueAtacante, elementoAtacante)
+        }
+
+    }
 
     fun reduzMana(manaPersonagem: Int, custoMagia: Int): Int {
 
@@ -291,11 +311,6 @@ open class Personagem(nick: String, element: Int) {
 
         return manaAtual
     }
-
-    fun usarMagia(){
-
-    }
-
 
     //INTERFACES?
     protected open fun genId(rpgAtual: Rpg): Int {

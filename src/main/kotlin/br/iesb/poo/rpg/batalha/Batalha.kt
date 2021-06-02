@@ -48,45 +48,12 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
     monstro.defesa = monstro.maxDefesa
     monstro.velocidade = monstro.maxVelocidade
 
-
-    log += "[ i ] MONSTRO INICIAL - ATAQUE $ataqueM /// DEFESA ${defesaM}\n"
-    log += "[ i ] JOGADOR INICIAL - ATAQUE $ataqueJ /// DEFESA ${defesaJ}\n"
-
-    val chanceterreno: Int = (1..4).random()
-    val tipoTerreno = arrayOf("AQUÁTICO", "VULCÂNICO", "AÉREO", "MONTANHOSO")
-
-    log += "[ ^ ] BATALHA NO TERRENO ${tipoTerreno[chanceterreno-1]}\n"
-
-    // TERRENO BUFF ATK
-    if (chanceterreno == jogador.elemento)
-        ataqueJ++
-    if (chanceterreno == monstro.elemento)
-        ataqueM++
-
-    // TERRENO DEBUFF DEF
-    if ((chanceterreno + 1 == jogador.elemento || jogador.elemento == 1 && chanceterreno == 4) && defesaJ > 1)
-        defesaJ--
-    if ((chanceterreno + 1 == monstro.elemento || monstro.elemento == 1 && chanceterreno == 4) && defesaM > 1)
-        defesaM--
-
-    //DIFERENÇA ENTRE COMBATENTES DEBUFF DEF
-    if ((monstro.elemento + 1 == jogador.elemento || jogador.elemento == 1 && monstro.elemento == 4) && defesaJ > 1)
-        defesaJ--
-    if ((jogador.elemento + 1 == monstro.elemento || monstro.elemento == 1 && jogador.elemento == 4) && defesaM > 1)
-        defesaM--
-
-    log += "[ f ] MONSTRO FINAL - ATAQUE $ataqueM /// DEFESA ${defesaM}\n"
-    log += "[ f ] JOGADOR FINAL - ATAQUE $ataqueJ /// DEFESA ${defesaJ}\n\n"
-
     // FIM CÁLCULOS DE ATRIBUTOS
     // INÍCIO COMBATE
 
-    val iniciativaM: Int = (0..10).random()
     var turno = 1
 
-    val INICIOTURNO = 7
-
-    if (INICIOTURNO + jogador.sorte > iniciativaM) { // if(jogador.velocidade > monstro.velocidade)
+    if(jogador.velocidade > monstro.velocidade){
         log += "[ * ] JOGADOR INICIOU O COMBATE\n\n"
 
         while (batalhaRolando) { //Para batalha, a gente vai fazer um switch case para as opções que o jogador pode fazer
@@ -157,7 +124,7 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
             when(opcaoM) {
 
-                1 -> jogador.pontosVida = monstro.atacarPersonagem(monstro.maxAtaque, monstro.nivel, jogador.defesa, jogador.pontosVida) //Ataque Basico
+                1 -> dano= monstro.atacarPersonagem(monstro.maxAtaque, monstro.nivel, jogador.defesa, jogador.pontosVida) //Ataque Basico
                 2 -> monstro.defesa = monstro.defender(monstro.defesa) //opcao pro personagem defender
                 //3 -> Magia
             }
@@ -175,7 +142,7 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
             //TURNO JOGADOR
             when (opcaoJ) {
 
-                1 -> monstro.pontosVida = monstro.atacarPersonagem(jogador.maxAtaque, jogador.nivel, monstro.defesa, monstro.pontosVida) //Ataque Basico
+                1 -> dano = monstro.atacarPersonagem(jogador.maxAtaque, jogador.nivel, monstro.defesa, monstro.pontosVida) //Ataque Basico
                 2 -> jogador.defesa = jogador.defender(jogador.defesa) //opcao pro personagem defender
                 3 -> batalhaRolando = jogador.fugirPersonagem(jogador.velocidade, monstro.velocidade) //opcao pro jogador fugir da batalha
                 //4 -> Magia

@@ -1,0 +1,7 @@
+C:\Users\Gabriel Rodrigues\Documents\API-PI2\src\main\kotlin\br\iesb\poo\rpg\rpg.kt
+C:\Users\Gabriel Rodrigues\Documents\API-PI2\src\main\kotlin\br\iesb\poo\rpg\personagem\Personagem.kt
+C:\Users\Gabriel Rodrigues\Documents\API-PI2\src\main\kotlin\br\iesb\poo\server.kt
+C:\Users\Gabriel Rodrigues\Documents\API-PI2\src\main\kotlin\br\iesb\poo\rpg\batalha\Batalha.kt
+C:\Users\Gabriel Rodrigues\Documents\API-PI2\src\main\kotlin\br\iesb\poo\rpg\personagem\PersonagemMonstro.kt
+C:\Users\Gabriel Rodrigues\Documents\API-PI2\src\main\kotlin\br\iesb\poo\rpg\personagem\PersonagemJogador.kt
+C:\Users\Gabriel Rodrigues\Documents\API-PI2\src\main\kotlin\br\iesb\poo\rpg\loja\Itens.kt
