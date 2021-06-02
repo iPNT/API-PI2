@@ -31,7 +31,10 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
     var defesaJ: Int = jogador.defesa + jogador.defesaitem
     var defesaM: Int = monstro.defesa
 
-    var dano: Int = 0
+    var danoJ: Int = 0
+    var danoM: Int = 0
+    var danoUpgradeJ: Int = 0
+    var danoUpgradeM: Int = 0
 
     var opcaoJ: Int = 0
     var opcaoM: Int = 0
@@ -68,12 +71,16 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
             //TURNO JOGADOR
             when (opcaoJ) {
 
-                1 -> monstro.pontosVida = jogador.atacarPersonagem(jogador.maxAtaque, jogador.nivel, monstro.defesa, monstro.pontosVida) //Ataque Basico
+                1 -> danoJ = jogador.atacarPersonagem(jogador.maxAtaque, jogador.nivel, monstro.defesa) //Ataque Basico
                 2 -> jogador.defesa = jogador.defender(jogador.defesa) //opcao pro personagem defender
                 3 -> batalhaRolando = jogador.fugirPersonagem(jogador.velocidade, monstro.velocidade) //opcao pro jogador fugir da batalha
-                //4 -> Magia
+                4 -> danoJ = jogador.usarMagia(jogador.nivel, danoUpgradeJ, jogador.maxAtaque, monstro.maxDefesa, jogador.elemento, monstro.elemento, jogador.pontosVida)
 
             }
+
+
+            monstro.pontosVida -= danoJ
+
 
 
             log += "TURNO ${turno}: JOGADOR ATACOU COM $ataqueJ MONSTRO FICOU COM $defesaM DE DEFESA\n"
@@ -82,8 +89,8 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
                 log += "\n[ = ] JOGADOR GANHOU\n"
                 log += monstro.derrota(RPG)
                 log += jogador.vitoria(monstro)
-                break //break faz a msm funcao do rolando, mas ai a gente vê qual a melhor opcao
-                //batalhaRolando = false
+                batalhaRolando = false //break faz a msm funcao do rolando, mas ai a gente vê qual a melhor opcao
+
             }
 
             //TURNO MONSTRO
@@ -92,10 +99,13 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
             when(opcaoM) {
 
-                1 -> jogador.pontosVida = monstro.atacarPersonagem(monstro.maxAtaque, monstro.nivel, jogador.defesa, jogador.pontosVida) //Ataque Basico
+                1 -> danoM = monstro.atacarPersonagem(monstro.maxAtaque, monstro.nivel, jogador.defesa) //Ataque Basico
                 2 -> monstro.defesa = monstro.defender(monstro.defesa) //opcao pro personagem defender
-                //3 -> Magia
+                3 -> danoM = monstro.usarMagia(monstro.nivel, danoUpgradeM, monstro.maxAtaque, jogador.maxDefesa, monstro.elemento, jogador.elemento, monstro.pontosVida)
             }
+
+            jogador.pontosVida -= danoM
+
 
             log += "TURNO ${turno}: MONSTRO ATACOU COM $ataqueM JOGADOR FICOU COM $defesaJ DE DEFESA\n"
 
@@ -104,8 +114,8 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
             if (jogador.pontosVida <= 0) {
                 log += "\n[ = ] JOGADOR PERDEU\n"
                 log += jogador.derrota(RPG)
-                break
-                //batalhaRolando = false
+                batalhaRolando = false
+
             }
         }
 
@@ -124,10 +134,12 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
             when(opcaoM) {
 
-                1 -> dano= monstro.atacarPersonagem(monstro.maxAtaque, monstro.nivel, jogador.defesa, jogador.pontosVida) //Ataque Basico
+                1 -> danoM = monstro.atacarPersonagem(monstro.maxAtaque, monstro.nivel, jogador.defesa) //Ataque Basico
                 2 -> monstro.defesa = monstro.defender(monstro.defesa) //opcao pro personagem defender
-                //3 -> Magia
+                3 -> danoM = monstro.usarMagia(monstro.nivel, danoUpgradeM, monstro.maxAtaque, jogador.maxDefesa, monstro.elemento, jogador.elemento, monstro.pontosVida)
             }
+
+            jogador.pontosVida -= danoM
 
 
             log += "TURNO ${turno}: MONSTRO ATACOU COM $ataqueM JOGADOR FICOU COM ${defesaJ}\n"
@@ -135,19 +147,21 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
             if (jogador.pontosVida <= 0) {
                 log += "\n[ = ] JOGADOR PERDEU\n"
                 log += jogador.derrota(RPG)
-                break
-                //batalhaRolando = false
+                batalhaRolando = false
+
             }
 
             //TURNO JOGADOR
             when (opcaoJ) {
 
-                1 -> dano = monstro.atacarPersonagem(jogador.maxAtaque, jogador.nivel, monstro.defesa, monstro.pontosVida) //Ataque Basico
+                1 -> danoJ = jogador.atacarPersonagem(jogador.maxAtaque, jogador.nivel, monstro.defesa) //Ataque Basico
                 2 -> jogador.defesa = jogador.defender(jogador.defesa) //opcao pro personagem defender
                 3 -> batalhaRolando = jogador.fugirPersonagem(jogador.velocidade, monstro.velocidade) //opcao pro jogador fugir da batalha
-                //4 -> Magia
+                4 -> danoJ = jogador.usarMagia(jogador.nivel, danoUpgradeJ, jogador.maxAtaque, monstro.maxDefesa, jogador.elemento, monstro.elemento, jogador.pontosVida)
 
             }
+
+            monstro.pontosVida -= danoJ
 
 
             log += "TURNO ${turno}: JOGADOR ATACOU COM $ataqueJ MONSTRO FICOU COM ${defesaM}\n"
@@ -158,8 +172,8 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
                 log += "\n[ = ] JOGADOR GANHOU\n"
                 log += monstro.derrota(RPG)
                 log += jogador.vitoria(monstro)
-                break
-                //batalhaRolando = false
+                batalhaRolando = false
+
             }
         }
 

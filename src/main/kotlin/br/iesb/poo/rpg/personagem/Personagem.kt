@@ -238,10 +238,9 @@ open class Personagem(nick: String, element: Int) {
         return dano
     }
 
-    fun atacarPersonagem(ataquePersonagem: Int, nivelPersonagem: Int, defesaInimigo: Int, vidaInimigo: Int): Int{
+    fun atacarPersonagem(ataquePersonagem: Int, nivelPersonagem: Int, defesaInimigo: Int): Int{
 
         var dano: Int = 0
-        var hpInimigo: Int = vidaInimigo
 
         dano = calcularDanoBasico(nivelPersonagem, ataquePersonagem, defesaInimigo)
 
@@ -283,24 +282,41 @@ open class Personagem(nick: String, element: Int) {
     }
 
     fun usarMagia(nivelAtacante: Int,
-                  poderAtaque: Int,
+                  upgradeMagia: Int,
                   statusAtaqueAtacante: Int,
                   statusDefesaVitima: Int,
-                  elementoAtaque: Int,
                   elementoAtacante: Int,
                   elementoVitima: Int,
-                  vidaAtacante: Int){
+                  vidaAtacante: Int): Int{
+
+        var dano: Int = 0
+        var cura: Int = 0
 
         when (magia){
-            1-> calcularDano(nivelAtacante, poderAtaque, statusAtaqueAtacante, statusDefesaVitima, 1, elementoAtacante, elementoVitima)
-            2-> calcularDano(nivelAtacante, poderAtaque, statusAtaqueAtacante, statusDefesaVitima, 2, elementoAtacante, elementoVitima)
-            3-> calcularDano(nivelAtacante, poderAtaque, statusAtaqueAtacante, statusDefesaVitima, 3, elementoAtacante, elementoVitima)
-            4-> calcularDano(nivelAtacante, poderAtaque, statusAtaqueAtacante, statusDefesaVitima, 4, elementoAtacante, elementoVitima)
-            5-> calcularDano(nivelAtacante, poderAtaque, statusAtaqueAtacante, statusDefesaVitima, 5, elementoAtacante, elementoVitima)
-            6-> pontosVida = calcularCura(vidaAtacante, nivelAtacante, poderAtaque, statusAtaqueAtacante, elementoAtacante)
+            1-> dano = calcularDano(nivelAtacante, 10 + upgradeMagia, statusAtaqueAtacante, statusDefesaVitima, 1, elementoAtacante, elementoVitima)
+            2-> dano = calcularDano(nivelAtacante, 10 + upgradeMagia, statusAtaqueAtacante, statusDefesaVitima, 2, elementoAtacante, elementoVitima)
+            3-> dano = calcularDano(nivelAtacante, 10 + upgradeMagia, statusAtaqueAtacante, statusDefesaVitima, 3, elementoAtacante, elementoVitima)
+            4-> dano = calcularDano(nivelAtacante, 10 + upgradeMagia, statusAtaqueAtacante, statusDefesaVitima, 4, elementoAtacante, elementoVitima)
+            5-> dano = calcularDano(nivelAtacante, 10 + upgradeMagia, statusAtaqueAtacante, statusDefesaVitima, 5, elementoAtacante, elementoVitima)
+            6-> cura = calcularCura(vidaAtacante, nivelAtacante, 10 + upgradeMagia, statusAtaqueAtacante, elementoAtacante)
         }
 
+//        if(magia == 6) {
+//
+//            return cura
+//        }
+//        else {
+//
+//            return dano
+//        }
+
+        return dano
+
     }
+
+
+
+
 
     fun reduzMana(manaPersonagem: Int, custoMagia: Int): Int {
 
