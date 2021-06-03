@@ -253,22 +253,24 @@ fun batalhaChefe(jogador: PersonagemJogador, RPG: Rpg): String {
     val chefe: PersonagemMonstro =
         RPG.criarMonstro(tipoPersonagem = TipoPersonagem.PERSONAGEM_CHEFE, jogadorBaseBatalha = jogador)
 
+    var batalhaRolando = true
+
 
     var log =
         "--BATALHA DE NÚMERO ${jogador.batalhas}--\n" +
         "--LOG DA BATALHA ENTRE ${jogador.nome} E CHEFE ${chefe.nome}--\n\n"
 
-    if (jogador.durabilidadeataque == 0) {
-        jogador.removerItem(jogador)
-    } else if (jogador.durabilidadeataque != 0) {
-        jogador.durabilidadeataque--
-    }
-
-    if (jogador.durabilidadedefesa == 0) {
-        jogador.removerItem(jogador)
-    } else if (jogador.durabilidadedefesa != 0) {
-        jogador.durabilidadedefesa--
-    }
+//    if (jogador.durabilidadeataque == 0) {
+//        jogador.removerItem(jogador)
+//    } else if (jogador.durabilidadeataque != 0) {
+//        jogador.durabilidadeataque--
+//    }
+//
+//    if (jogador.durabilidadedefesa == 0) {
+//        jogador.removerItem(jogador)
+//    } else if (jogador.durabilidadedefesa != 0) {
+//        jogador.durabilidadedefesa--
+//    }
 
     var ataqueJ: Int = jogador.ataque + jogador.ataqueitem
     var ataqueM: Int = chefe.ataque
@@ -278,8 +280,14 @@ fun batalhaChefe(jogador: PersonagemJogador, RPG: Rpg): String {
 
     var danoJ: Int = 0
     var danoM: Int = 0
+    var curaJ: Int = 0
+    var curaM: Int = 0
+
     var danoUpgradeJ: Int = 0
     var danoUpgradeM: Int = 0
+    var curaUpgradeJ: Int = 0
+    var curaUpgradeM: Int = 0
+    var reducaoMana: Int = 0
 
     var opcaoJ: Int = 0
     var opcaoM: Int = 0
@@ -300,56 +308,170 @@ fun batalhaChefe(jogador: PersonagemJogador, RPG: Rpg): String {
     log += "[ f ] CHEFE FINAL - ATAQUE $ataqueM /// DEFESA ${defesaM}\n"
     log += "[ f ] JOGADOR FINAL - ATAQUE $ataqueJ /// DEFESA ${defesaJ}\n\n"
 
-    val iniciativaM: Int = (0..10).random()
+
     var turno = 1
 
-    val INICIOTURNO = 7
 
-    if (INICIOTURNO + jogador.sorte > iniciativaM) {
+    if (jogador.velocidade > chefe.velocidade) {
 
         log += "[ * ] JOGADOR INICIOU O COMBATE\n\n"
 
-        while (defesaJ > 0 || defesaM > 0) {
-            defesaM -= ataqueJ
+        while (batalhaRolando) {
+
+            jogador.defesa = jogador.maxDefesa
+            chefe.defesa = chefe.maxDefesa
+
+
+            //TURNO JOGADOR
+            when (opcaoJ) {
+
+                1 -> danoJ = jogador.atacarPersonagem(jogador.maxAtaque, jogador.nivel, chefe.defesa) //Ataque Basico
+                2 -> jogador.defesa = jogador.defender(jogador.defesa) //opcao pro personagem defender
+                3 -> batalhaRolando = jogador.fugirPersonagem(jogador.velocidade, chefe.velocidade) //opcao pro jogador fugir da batalha
+                4 -> danoJ = jogador.usarMagia(jogador.nivel, danoUpgradeJ, jogador.maxAtaque, chefe.maxDefesa, jogador.elemento, chefe.elemento)
+                5 -> curaJ = jogador.calcularCura(jogador.nivel, 10 + curaUpgradeJ, jogador.maxMana, jogador.elemento)
+
+            }
+
+//            if(opcaoJ == 4){
+//
+//                reducaoMana = jogador.reduzMana(custoMagia)
+//
+//                jogador.pontosMana -= reducaoMana
+//            }
+//            else if (opcaoJ == 5){
+//
+//                reducaoMana = jogador.reduzMana(custoMagia)
+//
+//                jogador.pontosMana -= reducaoMana
+//            }
+
+            jogador.pontosVida += curaJ
+            chefe.pontosVida -= danoJ
+
             log += "TURNO ${turno}: JOGADOR ATACOU COM $ataqueJ MONSTRO FICOU COM $defesaM DE DEFESA\n"
 
-            if (defesaM <= 0) {
+            if (chefe.pontosVida <= 0) {
                 log += "\n[ = ] JOGADOR GANHOU\n"
                 log += chefe.derrota(RPG)
                 log += jogador.vitoria(chefe)
-                break
+                batalhaRolando = false
             }
 
-            defesaJ -= ataqueM
+            //TURNO MONSTRO
+
+            opcaoM = (1..3).random()
+
+            when(opcaoM) {
+
+                1 -> danoM = chefe.atacarPersonagem(chefe.maxAtaque, chefe.nivel, jogador.defesa) //Ataque Basico
+                2 -> chefe.defesa = chefe.defender(chefe.defesa) //opcao pro personagem defender
+                3 -> danoM = chefe.usarMagia(chefe.nivel, danoUpgradeM, chefe.maxAtaque, jogador.maxDefesa, chefe.elemento, jogador.elemento)
+                4 -> curaM = chefe.calcularCura(chefe.nivel, 10, chefe.maxMana, chefe.elemento)
+            }
+
+//            if(opcaoM == 3){
+//
+//                reducaoMana = monstro.reduzMana(custoMagia)
+//
+//                monstro.pontosMana -= reducaoMana
+//            }
+//            else if (opcaoM == 4){
+//
+//                reducaoMana = monstro.reduzMana(custoMagia)
+//
+//                monstro.pontosMana -= reducaoMana
+//            }
+
+            chefe.pontosVida += curaM
+            jogador.pontosVida -= danoM
+
+
             log += "TURNO ${turno}: MONSTRO ATACOU COM $ataqueM JOGADOR FICOU COM $defesaJ DE DEFESA\n"
 
             turno++
 
-            if (defesaJ <= 0) {
+            if (jogador.pontosVida <= 0) {
                 log += "\n[ = ] JOGADOR PERDEU\n"
                 log += jogador.derrota(RPG)
-                break
+                batalhaRolando = false
             }
         }
     } else {
         log += "[ * ] EMBOSCADA! MONSTRO INICIOU O COMBATE\n\n"
 
-        while (defesaM > 0 || defesaJ > 0) {
-            defesaJ -= ataqueM
+        while (batalhaRolando) {
+
+            //TURNO MONSTRO
+
+            opcaoM = (1..3).random()
+
+            when(opcaoM) {
+
+                1 -> danoM = chefe.atacarPersonagem(chefe.maxAtaque, chefe.nivel, jogador.defesa) //Ataque Basico
+                2 -> chefe.defesa = chefe.defender(chefe.defesa) //opcao pro personagem defender
+                3 -> danoM = chefe.usarMagia(chefe.nivel, danoUpgradeM, chefe.maxAtaque, jogador.maxDefesa, chefe.elemento, jogador.elemento)
+                4 -> curaM = chefe.calcularCura(chefe.nivel, 10, chefe.maxMana, chefe.elemento)
+            }
+
+//            if(opcaoM == 3){
+//
+//                reducaoMana = monstro.reduzMana(custoMagia)
+//
+//                monstro.pontosMana -= reducaoMana
+//            }
+//            else if (opcaoM == 4){
+//
+//                reducaoMana = monstro.reduzMana(custoMagia)
+//
+//                monstro.pontosMana -= reducaoMana
+//            }
+
+            chefe.pontosVida += curaM
+            jogador.pontosVida -= danoM
+
+
             log += "TURNO ${turno}: MONSTRO ATACOU COM $ataqueM JOGADOR FICOU COM ${defesaJ}\n"
 
-            if (defesaJ <= 0) {
+            if (jogador.pontosVida <= 0) {
                 log += "\n[ = ] JOGADOR PERDEU\n"
                 log += jogador.derrotaChefe(RPG)
                 break
             }
 
-            defesaM -= ataqueJ
+            //TURNO JOGADOR
+            when (opcaoJ) {
+
+                1 -> danoJ = jogador.atacarPersonagem(jogador.maxAtaque, jogador.nivel, chefe.defesa) //Ataque Basico
+                2 -> jogador.defesa = jogador.defender(jogador.defesa) //opcao pro personagem defender
+                3 -> batalhaRolando = jogador.fugirPersonagem(jogador.velocidade, chefe.velocidade) //opcao pro jogador fugir da batalha
+                4 -> danoJ = jogador.usarMagia(jogador.nivel, danoUpgradeJ, jogador.maxAtaque, chefe.maxDefesa, jogador.elemento, chefe.elemento)
+                5 -> curaJ = jogador.calcularCura(jogador.nivel, 10 + curaUpgradeJ, jogador.maxMana, jogador.elemento)
+
+            }
+
+//            if(opcaoJ == 4){
+//
+//                reducaoMana = jogador.reduzMana(custoMagia)
+//
+//                jogador.pontosMana -= reducaoMana
+//            }
+//            else if (opcaoJ == 5){
+//
+//                reducaoMana = jogador.reduzMana(custoMagia)
+//
+//                jogador.pontosMana -= reducaoMana
+//            }
+
+            jogador.pontosVida += curaJ
+            chefe.pontosVida -= danoJ
+
+            
             log += "TURNO ${turno}: JOGADOR ATACOU COM $ataqueJ MONSTRO FICOU COM ${defesaM}\n"
 
             turno++
 
-            if (defesaM <= 0) {
+            if (chefe.pontosVida <= 0) {
                 log += "\n[ = ] JOGADOR GANHOU\n"
                 log += chefe.derrota(RPG)
                 log += jogador.vitoria(chefe)
