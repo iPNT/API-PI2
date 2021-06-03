@@ -260,10 +260,9 @@ open class Personagem(nick: String, element: Int) {
     }
 
 
-    fun calcularCura(vidaAtacante: Int, nivelAtacante: Int, poderAtaque: Int, statusMaxManaAtacante: Int, elementoAtacante: Int): Int{
+    fun calcularCura(nivelAtacante: Int, poderAtaque: Int, statusMaxManaAtacante: Int, elementoAtacante: Int): Int{
 
         var cura: Int = 0
-        var aumentoVida: Int = vidaAtacante
 
         if(elementoAtacante == 4){
 
@@ -275,9 +274,7 @@ open class Personagem(nick: String, element: Int) {
             cura = ((nivelAtacante * poderAtaque) * statusMaxManaAtacante) / 200 //Valor divisor a ser ajustado com testes de balanceamento
         }
 
-        aumentoVida += cura
-
-        return aumentoVida
+        return cura
 
     }
 
@@ -286,8 +283,7 @@ open class Personagem(nick: String, element: Int) {
                   statusAtaqueAtacante: Int,
                   statusDefesaVitima: Int,
                   elementoAtacante: Int,
-                  elementoVitima: Int,
-                  vidaAtacante: Int): Int{
+                  elementoVitima: Int): Int{
 
         var dano: Int = 0
         var cura: Int = 0
@@ -298,17 +294,8 @@ open class Personagem(nick: String, element: Int) {
             3-> dano = calcularDano(nivelAtacante, 10 + upgradeMagia, statusAtaqueAtacante, statusDefesaVitima, 3, elementoAtacante, elementoVitima)
             4-> dano = calcularDano(nivelAtacante, 10 + upgradeMagia, statusAtaqueAtacante, statusDefesaVitima, 4, elementoAtacante, elementoVitima)
             5-> dano = calcularDano(nivelAtacante, 10 + upgradeMagia, statusAtaqueAtacante, statusDefesaVitima, 5, elementoAtacante, elementoVitima)
-            6-> cura = calcularCura(vidaAtacante, nivelAtacante, 10 + upgradeMagia, statusAtaqueAtacante, elementoAtacante)
         }
 
-//        if(magia == 6) {
-//
-//            return cura
-//        }
-//        else {
-//
-//            return dano
-//        }
 
         return dano
 
@@ -318,14 +305,11 @@ open class Personagem(nick: String, element: Int) {
 
 
 
-    fun reduzMana(manaPersonagem: Int, custoMagia: Int): Int {
+    fun reduzMana(custoMagia: Int): Int {
 
         var reducao: Int = custoMagia
-        var manaAtual: Int = manaPersonagem
 
-        manaAtual -= reducao
-
-        return manaAtual
+        return reducao
     }
 
     //INTERFACES?

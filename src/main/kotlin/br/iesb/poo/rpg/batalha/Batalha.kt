@@ -33,8 +33,14 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
     var danoJ: Int = 0
     var danoM: Int = 0
+    var curaJ: Int = 0
+    var curaM: Int = 0
+
     var danoUpgradeJ: Int = 0
     var danoUpgradeM: Int = 0
+    var curaUpgradeJ: Int = 0
+    var curaUpgradeM: Int = 0
+    var reducaoMana: Int = 0
 
     var opcaoJ: Int = 0
     var opcaoM: Int = 0
@@ -74,11 +80,25 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
                 1 -> danoJ = jogador.atacarPersonagem(jogador.maxAtaque, jogador.nivel, monstro.defesa) //Ataque Basico
                 2 -> jogador.defesa = jogador.defender(jogador.defesa) //opcao pro personagem defender
                 3 -> batalhaRolando = jogador.fugirPersonagem(jogador.velocidade, monstro.velocidade) //opcao pro jogador fugir da batalha
-                4 -> danoJ = jogador.usarMagia(jogador.nivel, danoUpgradeJ, jogador.maxAtaque, monstro.maxDefesa, jogador.elemento, monstro.elemento, jogador.pontosVida)
+                4 -> danoJ = jogador.usarMagia(jogador.nivel, danoUpgradeJ, jogador.maxAtaque, monstro.maxDefesa, jogador.elemento, monstro.elemento)
+                5 -> curaJ = jogador.calcularCura(jogador.nivel, 10 + curaUpgradeJ, jogador.maxMana, jogador.elemento)
 
             }
 
+//            if(opcaoJ == 4){
+//
+//                reducaoMana = jogador.reduzMana(custoMagia)
+//
+//                jogador.pontosMana -= reducaoMana
+//            }
+//            else if (opcaoJ == 5){
+//
+//                reducaoMana = jogador.reduzMana(custoMagia)
+//
+//                jogador.pontosMana -= reducaoMana
+//            }
 
+            jogador.pontosVida += curaJ
             monstro.pontosVida -= danoJ
 
 
@@ -101,9 +121,24 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
                 1 -> danoM = monstro.atacarPersonagem(monstro.maxAtaque, monstro.nivel, jogador.defesa) //Ataque Basico
                 2 -> monstro.defesa = monstro.defender(monstro.defesa) //opcao pro personagem defender
-                3 -> danoM = monstro.usarMagia(monstro.nivel, danoUpgradeM, monstro.maxAtaque, jogador.maxDefesa, monstro.elemento, jogador.elemento, monstro.pontosVida)
+                3 -> danoM = monstro.usarMagia(monstro.nivel, danoUpgradeM, monstro.maxAtaque, jogador.maxDefesa, monstro.elemento, jogador.elemento)
+                4 -> curaM = monstro.calcularCura(monstro.nivel, 10, monstro.maxMana, monstro.elemento)
             }
 
+//            if(opcaoM == 3){
+//
+//                reducaoMana = monstro.reduzMana(custoMagia)
+//
+//                monstro.pontosMana -= reducaoMana
+//            }
+//            else if (opcaoM == 4){
+//
+//                reducaoMana = monstro.reduzMana(custoMagia)
+//
+//                monstro.pontosMana -= reducaoMana
+//            }
+
+            monstro.pontosVida += curaM
             jogador.pontosVida -= danoM
 
 
@@ -136,9 +171,24 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
                 1 -> danoM = monstro.atacarPersonagem(monstro.maxAtaque, monstro.nivel, jogador.defesa) //Ataque Basico
                 2 -> monstro.defesa = monstro.defender(monstro.defesa) //opcao pro personagem defender
-                3 -> danoM = monstro.usarMagia(monstro.nivel, danoUpgradeM, monstro.maxAtaque, jogador.maxDefesa, monstro.elemento, jogador.elemento, monstro.pontosVida)
+                3 -> danoM = monstro.usarMagia(monstro.nivel, danoUpgradeM, monstro.maxAtaque, jogador.maxDefesa, monstro.elemento, jogador.elemento)
+                4 -> curaM = monstro.calcularCura(monstro.nivel, 10, monstro.maxMana, monstro.elemento)
             }
 
+//            if(opcaoM == 3){
+//
+//                reducaoMana = monstro.reduzMana(custoMagia)
+//
+//                monstro.pontosMana -= reducaoMana
+//            }
+//            else if (opcaoM == 4){
+//
+//                reducaoMana = monstro.reduzMana(custoMagia)
+//
+//                monstro.pontosMana -= reducaoMana
+//            }
+
+            monstro.pontosVida += curaM
             jogador.pontosVida -= danoM
 
 
@@ -157,10 +207,25 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
                 1 -> danoJ = jogador.atacarPersonagem(jogador.maxAtaque, jogador.nivel, monstro.defesa) //Ataque Basico
                 2 -> jogador.defesa = jogador.defender(jogador.defesa) //opcao pro personagem defender
                 3 -> batalhaRolando = jogador.fugirPersonagem(jogador.velocidade, monstro.velocidade) //opcao pro jogador fugir da batalha
-                4 -> danoJ = jogador.usarMagia(jogador.nivel, danoUpgradeJ, jogador.maxAtaque, monstro.maxDefesa, jogador.elemento, monstro.elemento, jogador.pontosVida)
+                4 -> danoJ = jogador.usarMagia(jogador.nivel, danoUpgradeJ, jogador.maxAtaque, monstro.maxDefesa, jogador.elemento, monstro.elemento)
+                5 -> curaJ = jogador.calcularCura(jogador.nivel, 10 + curaUpgradeJ, jogador.maxMana, jogador.elemento)
 
             }
 
+//            if(opcaoJ == 4){
+//
+//                reducaoMana = jogador.reduzMana(custoMagia)
+//
+//                jogador.pontosMana -= reducaoMana
+//            }
+//            else if (opcaoJ == 5){
+//
+//                reducaoMana = jogador.reduzMana(custoMagia)
+//
+//                jogador.pontosMana -= reducaoMana
+//            }
+
+            jogador.pontosVida += curaJ
             monstro.pontosVida -= danoJ
 
 
@@ -210,6 +275,26 @@ fun batalhaChefe(jogador: PersonagemJogador, RPG: Rpg): String {
 
     var defesaJ: Int = jogador.defesa + jogador.defesaitem
     var defesaM: Int = chefe.defesa
+
+    var danoJ: Int = 0
+    var danoM: Int = 0
+    var danoUpgradeJ: Int = 0
+    var danoUpgradeM: Int = 0
+
+    var opcaoJ: Int = 0
+    var opcaoM: Int = 0
+
+    jogador.pontosVida = jogador.maxVida
+    jogador.pontosMana = jogador.maxMana
+    jogador.ataque = jogador.maxAtaque
+    jogador.defesa = jogador.maxDefesa
+    jogador.velocidade = jogador.maxVelocidade
+
+    chefe.pontosVida = chefe.maxVida
+    chefe.pontosMana = chefe.maxMana
+    chefe.ataque = chefe.maxAtaque
+    chefe.defesa = chefe.maxDefesa
+    chefe.velocidade = chefe.maxVelocidade
 
 
     log += "[ f ] CHEFE FINAL - ATAQUE $ataqueM /// DEFESA ${defesaM}\n"
