@@ -333,18 +333,18 @@ fun batalhaChefe(jogador: PersonagemJogador, RPG: Rpg): String {
 
             }
 
-//            if(opcaoJ == 4){
-//
-//                reducaoMana = jogador.reduzMana(custoMagia)
-//
-//                jogador.pontosMana -= reducaoMana
-//            }
-//            else if (opcaoJ == 5){
-//
-//                reducaoMana = jogador.reduzMana(custoMagia)
-//
-//                jogador.pontosMana -= reducaoMana
-//            }
+            if(opcaoJ == 4){
+
+                reducaoMana = jogador.reduzMana(custoMagia)
+
+                jogador.pontosMana -= reducaoMana
+            }
+            else if (opcaoJ == 5){
+
+                reducaoMana = jogador.reduzMana(custoMagia)
+
+                jogador.pontosMana -= reducaoMana
+            }
 
             jogador.pontosVida += curaJ
             chefe.pontosVida -= danoJ
