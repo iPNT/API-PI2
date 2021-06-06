@@ -45,31 +45,6 @@ open class Personagem(nick: String, element: Int) {
 
     var elemento: Int = element
 
-    fun getMaxVida(jogador: Personagem): Int{
-
-        return jogador.maxVida
-    }
-
-    fun getMaxMana(jogador: Personagem): Int{
-
-        return jogador.maxMana
-    }
-
-    fun getMaxAtaque(jogador: Personagem): Int{
-
-        return jogador.maxAtaque
-    }
-
-    fun getMaxDefesa(jogador: Personagem): Int{
-
-        return jogador.maxDefesa
-    }
-
-    fun getMaxVelocidade(jogador: Personagem): Int{
-
-        return jogador.maxVelocidade
-    }
-
     fun calcularDano(nivelAtacante: Int,
                      poderAtaque: Int,
                      statusAtaqueAtacante: Int,
@@ -87,7 +62,6 @@ open class Personagem(nick: String, element: Int) {
             //INICIO AGUA
 
         var dano: Int = 0
-        var retorno: Int = 0
 
             if(elementoAtaque == 1 && elementoVitima == 1){
 
@@ -222,6 +196,8 @@ open class Personagem(nick: String, element: Int) {
 
             }
 
+        reduzMana(dano)
+
         return dano
     }
 
@@ -286,7 +262,6 @@ open class Personagem(nick: String, element: Int) {
                   elementoVitima: Int): Int{
 
         var dano: Int = 0
-        var cura: Int = 0
 
         when (magia){
             1-> dano = calcularDano(nivelAtacante, 10 + upgradeMagia, statusAtaqueAtacante, statusDefesaVitima, 1, elementoAtacante, elementoVitima)
@@ -296,20 +271,13 @@ open class Personagem(nick: String, element: Int) {
             5-> dano = calcularDano(nivelAtacante, 10 + upgradeMagia, statusAtaqueAtacante, statusDefesaVitima, 5, elementoAtacante, elementoVitima)
         }
 
-
         return dano
 
     }
 
 
-
-
-
-    fun reduzMana(custoMagia: Int): Int {
-
-        var reducao: Int = custoMagia
-
-        return reducao
+    fun reduzMana(dmg: Int){
+        this.pontosMana = dmg - 10/100
     }
 
     //INTERFACES?

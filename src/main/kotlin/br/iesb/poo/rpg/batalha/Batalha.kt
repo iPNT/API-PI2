@@ -8,7 +8,7 @@ import br.iesb.poo.rpg.personagem.PersonagemMonstro
 
 fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
-    val monstro: PersonagemMonstro = RPG.criarMonstro(tipoPersonagem = TipoPersonagem.PERSONAGEM_MONSTRO, jogadorBaseBatalha = jogador)
+    val monstro: PersonagemMonstro = RPG.criarMonstro(tipoPersonagem = TipoPersonagem.PERSONAGEM_MONSTRO)
 
     val racaMonstro = arrayOf("Orc", "Goblin", "Gnomio")
     val afinidade = arrayOf("ÁGUA", "FOGO", "AR", "TERRA")
@@ -125,19 +125,6 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
                 4 -> curaM = monstro.calcularCura(monstro.nivel, 10, monstro.maxMana, monstro.elemento)
             }
 
-//            if(opcaoM == 3){
-//
-//                reducaoMana = monstro.reduzMana(custoMagia)
-//
-//                monstro.pontosMana -= reducaoMana
-//            }
-//            else if (opcaoM == 4){
-//
-//                reducaoMana = monstro.reduzMana(custoMagia)
-//
-//                monstro.pontosMana -= reducaoMana
-//            }
-
             monstro.pontosVida += curaM
             jogador.pontosVida -= danoM
 
@@ -174,19 +161,6 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
                 3 -> danoM = monstro.usarMagia(monstro.nivel, danoUpgradeM, monstro.maxAtaque, jogador.maxDefesa, monstro.elemento, jogador.elemento)
                 4 -> curaM = monstro.calcularCura(monstro.nivel, 10, monstro.maxMana, monstro.elemento)
             }
-
-//            if(opcaoM == 3){
-//
-//                reducaoMana = monstro.reduzMana(custoMagia)
-//
-//                monstro.pontosMana -= reducaoMana
-//            }
-//            else if (opcaoM == 4){
-//
-//                reducaoMana = monstro.reduzMana(custoMagia)
-//
-//                monstro.pontosMana -= reducaoMana
-//            }
 
             monstro.pontosVida += curaM
             jogador.pontosVida -= danoM
@@ -251,7 +225,7 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 fun batalhaChefe(jogador: PersonagemJogador, RPG: Rpg): String {
 
     val chefe: PersonagemMonstro =
-        RPG.criarMonstro(tipoPersonagem = TipoPersonagem.PERSONAGEM_CHEFE, jogadorBaseBatalha = jogador)
+        RPG.criarMonstro(tipoPersonagem = TipoPersonagem.PERSONAGEM_CHEFE)
 
     var batalhaRolando = true
 
@@ -333,18 +307,18 @@ fun batalhaChefe(jogador: PersonagemJogador, RPG: Rpg): String {
 
             }
 
-            if(opcaoJ == 4){
-
-                reducaoMana = jogador.reduzMana(custoMagia)
-
-                jogador.pontosMana -= reducaoMana
-            }
-            else if (opcaoJ == 5){
-
-                reducaoMana = jogador.reduzMana(custoMagia)
-
-                jogador.pontosMana -= reducaoMana
-            }
+//            if(opcaoJ == 4){
+//
+//                reducaoMana = jogador.reduzMana(custoMagia)
+//
+//                jogador.pontosMana -= reducaoMana
+//            }
+//            else if (opcaoJ == 5){
+//
+//                reducaoMana = jogador.reduzMana(custoMagia)
+//
+//                jogador.pontosMana -= reducaoMana
+//            }
 
             jogador.pontosVida += curaJ
             chefe.pontosVida -= danoJ
@@ -369,19 +343,6 @@ fun batalhaChefe(jogador: PersonagemJogador, RPG: Rpg): String {
                 3 -> danoM = chefe.usarMagia(chefe.nivel, danoUpgradeM, chefe.maxAtaque, jogador.maxDefesa, chefe.elemento, jogador.elemento)
                 4 -> curaM = chefe.calcularCura(chefe.nivel, 10, chefe.maxMana, chefe.elemento)
             }
-
-//            if(opcaoM == 3){
-//
-//                reducaoMana = monstro.reduzMana(custoMagia)
-//
-//                monstro.pontosMana -= reducaoMana
-//            }
-//            else if (opcaoM == 4){
-//
-//                reducaoMana = monstro.reduzMana(custoMagia)
-//
-//                monstro.pontosMana -= reducaoMana
-//            }
 
             chefe.pontosVida += curaM
             jogador.pontosVida -= danoM
@@ -449,19 +410,6 @@ fun batalhaChefe(jogador: PersonagemJogador, RPG: Rpg): String {
                 5 -> curaJ = jogador.calcularCura(jogador.nivel, 10 + curaUpgradeJ, jogador.maxMana, jogador.elemento)
 
             }
-
-//            if(opcaoJ == 4){
-//
-//                reducaoMana = jogador.reduzMana(custoMagia)
-//
-//                jogador.pontosMana -= reducaoMana
-//            }
-//            else if (opcaoJ == 5){
-//
-//                reducaoMana = jogador.reduzMana(custoMagia)
-//
-//                jogador.pontosMana -= reducaoMana
-//            }
 
             jogador.pontosVida += curaJ
             chefe.pontosVida -= danoJ

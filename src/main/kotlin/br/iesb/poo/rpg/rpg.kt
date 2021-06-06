@@ -38,8 +38,7 @@ class Rpg {
     )
 
     fun criarMonstro(
-        tipoPersonagem: TipoPersonagem,
-        jogadorBaseBatalha: PersonagemJogador
+        tipoPersonagem: TipoPersonagem
     ): PersonagemMonstro {
 
         val novoPersonagem =if (tipoPersonagem == TipoPersonagem.PERSONAGEM_MONSTRO){
@@ -47,7 +46,6 @@ class Rpg {
                 novaRaca = (0..1).random(),
                 (listaNomes).random() + (listaTitulos).random(),
                 elementoMonstro = (1..4).random(),
-                jogadorBase = jogadorBaseBatalha,
                 RPG
             )
         } else{
@@ -55,7 +53,6 @@ class Rpg {
                 novaRaca = 3,
                 (listaChefe).random(),
                 elementoMonstro = 1,
-                jogadorBase = jogadorBaseBatalha,
                 RPG
             )
         }
