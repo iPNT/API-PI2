@@ -5,6 +5,25 @@ plugins {
 group 'org.example'
 version '1.0-SNAPSHOT'
 
+mainClassName = "br.iesb.poo.serverKt"
+task stage {
+    dependsOn installDist
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': "br.iesb.poo.serverKt"
+        )
+    }
+    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+sourceSets {
+    main.kotlin.srcDirs = main.java.srcDirs = ['src']
+    main.resources.srcDirs = ['resources']
+}
+
 repositories {
     jcenter()
     mavenCentral()
