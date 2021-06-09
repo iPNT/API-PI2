@@ -1,0 +1,1 @@
+web: java -jar build/libs/iesbRPG-1.0-SNAPSHOT.jar
