@@ -5,7 +5,6 @@ plugins {
 group 'org.example'
 version '1.0-SNAPSHOT'
 
-mainClassName = "br.iesb.poo.serverKt"
 task stage {
     dependsOn installDist
 }
