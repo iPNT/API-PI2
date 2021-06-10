@@ -14,7 +14,7 @@ import io.ktor.server.netty.*
 import br.iesb.poo.rpg.batalha.batalha
 import br.iesb.poo.rpg.batalha.batalhaChefe
 import br.iesb.poo.rpg.loja.Itens
-import java.io.File
+import java.io.Files
 
 val RPG: Rpg = Rpg()
 
