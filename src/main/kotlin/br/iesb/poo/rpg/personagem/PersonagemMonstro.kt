@@ -21,7 +21,7 @@ class PersonagemMonstro(
 
         if (raca == 1) {
 
-            nivelMasmorra += (-2..2).random()
+           // nivelMasmorra += (-2..2).random()
 
             this.maxVida = 6
             this.maxMana = 6

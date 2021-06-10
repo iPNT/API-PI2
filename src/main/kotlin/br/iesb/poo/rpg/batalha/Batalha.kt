@@ -9,6 +9,7 @@ import br.iesb.poo.rpg.personagem.PersonagemMonstro
 fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
     val monstro: PersonagemMonstro = RPG.criarMonstro(tipoPersonagem = TipoPersonagem.PERSONAGEM_MONSTRO)
+    monstro.definirStatusBase()
 
     val racaMonstro = arrayOf("Orc", "Goblin", "Gnomio")
     val afinidade = arrayOf("ÁGUA", "FOGO", "AR", "TERRA")
@@ -23,13 +24,6 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
     log += "[ ~ ] MONSTRO COM ELEMENTO ${afinidade[monstro.elemento-1]}\n"
     log += "[ ~ ] JOGADOR COM ELEMENTO ${afinidade[jogador.elemento-1]}\n"
 
-
-
-    var ataqueJ: Int = jogador.ataque + jogador.ataqueitem
-    var ataqueM: Int = monstro.ataque
-
-    var defesaJ: Int = jogador.defesa + jogador.defesaitem
-    var defesaM: Int = monstro.defesa
 
     var danoJ: Int = 0
     var danoM: Int = 0
@@ -73,7 +67,7 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
             jogador.defesa = jogador.maxDefesa
             monstro.defesa = monstro.maxDefesa
 
-
+            opcaoJ = 1
             //TURNO JOGADOR
             when (opcaoJ) {
 
@@ -85,25 +79,12 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
             }
 
-//            if(opcaoJ == 4){
-//
-//                reducaoMana = jogador.reduzMana(custoMagia)
-//
-//                jogador.pontosMana -= reducaoMana
-//            }
-//            else if (opcaoJ == 5){
-//
-//                reducaoMana = jogador.reduzMana(custoMagia)
-//
-//                jogador.pontosMana -= reducaoMana
-//            }
-
             jogador.pontosVida += curaJ
             monstro.pontosVida -= danoJ
 
 
 
-            log += "TURNO ${turno}: JOGADOR ATACOU COM $ataqueJ MONSTRO FICOU COM $defesaM DE DEFESA\n"
+            log += "TURNO ${turno}: JOGADOR ATACOU COM $danoJ MONSTRO FICOU COM ${monstro.pontosVida} DE DEFESA\n"
 
             if (monstro.pontosVida <= 0) {
                 log += "\n[ = ] JOGADOR GANHOU\n"
@@ -115,7 +96,7 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
             //TURNO MONSTRO
 
-            opcaoM = (1..3).random()
+            opcaoM = 1
 
             when(opcaoM) {
 
@@ -129,7 +110,7 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
             jogador.pontosVida -= danoM
 
 
-            log += "TURNO ${turno}: MONSTRO ATACOU COM $ataqueM JOGADOR FICOU COM $defesaJ DE DEFESA\n"
+            log += "TURNO ${turno}: MONSTRO ATACOU COM $danoM JOGADOR FICOU COM ${jogador.pontosVida} DE DEFESA\n"
 
             turno++
 
@@ -142,6 +123,7 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
         }
 
         log += "\n--FIM DO COMBATE--\n"
+
     } else {
         log += "[ * ] EMBOSCADA! MONSTRO INICIOU O COMBATE\n\n"
 
@@ -152,7 +134,7 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
             //TURNO MONSTRO
 
-            opcaoM = (1..3).random()
+            opcaoM = 1
 
             when(opcaoM) {
 
@@ -166,7 +148,7 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
             jogador.pontosVida -= danoM
 
 
-            log += "TURNO ${turno}: MONSTRO ATACOU COM $ataqueM JOGADOR FICOU COM ${defesaJ}\n"
+            log += "TURNO ${turno}: MONSTRO ATACOU COM $danoM JOGADOR FICOU COM ${jogador.pontosVida}\n"
 
             if (jogador.pontosVida <= 0) {
                 log += "\n[ = ] JOGADOR PERDEU\n"
@@ -175,6 +157,8 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
 
             }
 
+
+            opcaoJ = 1
             //TURNO JOGADOR
             when (opcaoJ) {
 
@@ -203,7 +187,7 @@ fun batalha(jogador: PersonagemJogador, RPG: Rpg): String {
             monstro.pontosVida -= danoJ
 
 
-            log += "TURNO ${turno}: JOGADOR ATACOU COM $ataqueJ MONSTRO FICOU COM ${defesaM}\n"
+            log += "TURNO ${turno}: JOGADOR ATACOU COM $danoJ MONSTRO FICOU COM ${monstro.pontosVida}\n"
 
             turno++
 
@@ -246,12 +230,6 @@ fun batalhaChefe(jogador: PersonagemJogador, RPG: Rpg): String {
 //        jogador.durabilidadedefesa--
 //    }
 
-    var ataqueJ: Int = jogador.ataque + jogador.ataqueitem
-    var ataqueM: Int = chefe.ataque
-
-    var defesaJ: Int = jogador.defesa + jogador.defesaitem
-    var defesaM: Int = chefe.defesa
-
     var danoJ: Int = 0
     var danoM: Int = 0
     var curaJ: Int = 0
@@ -278,9 +256,9 @@ fun batalhaChefe(jogador: PersonagemJogador, RPG: Rpg): String {
     chefe.defesa = chefe.maxDefesa
     chefe.velocidade = chefe.maxVelocidade
 
-
+/*
     log += "[ f ] CHEFE FINAL - ATAQUE $ataqueM /// DEFESA ${defesaM}\n"
-    log += "[ f ] JOGADOR FINAL - ATAQUE $ataqueJ /// DEFESA ${defesaJ}\n\n"
+    log += "[ f ] JOGADOR FINAL - ATAQUE $ataqueJ /// DEFESA ${defesaJ}\n\n"*/
 
 
     var turno = 1
@@ -323,7 +301,7 @@ fun batalhaChefe(jogador: PersonagemJogador, RPG: Rpg): String {
             jogador.pontosVida += curaJ
             chefe.pontosVida -= danoJ
 
-            log += "TURNO ${turno}: JOGADOR ATACOU COM $ataqueJ MONSTRO FICOU COM $defesaM DE DEFESA\n"
+            log += "TURNO ${turno}: JOGADOR ATACOU COM $danoJ MONSTRO FICOU COM ${chefe.pontosVida} DE DEFESA\n"
 
             if (chefe.pontosVida <= 0) {
                 log += "\n[ = ] JOGADOR GANHOU\n"
@@ -348,7 +326,7 @@ fun batalhaChefe(jogador: PersonagemJogador, RPG: Rpg): String {
             jogador.pontosVida -= danoM
 
 
-            log += "TURNO ${turno}: MONSTRO ATACOU COM $ataqueM JOGADOR FICOU COM $defesaJ DE DEFESA\n"
+            log += "TURNO ${turno}: MONSTRO ATACOU COM $danoM JOGADOR FICOU COM ${jogador.pontosVida} DE DEFESA\n"
 
             turno++
 
@@ -392,7 +370,7 @@ fun batalhaChefe(jogador: PersonagemJogador, RPG: Rpg): String {
             jogador.pontosVida -= danoM
 
 
-            log += "TURNO ${turno}: MONSTRO ATACOU COM $ataqueM JOGADOR FICOU COM ${defesaJ}\n"
+            log += "TURNO ${turno}: MONSTRO ATACOU COM $danoM JOGADOR FICOU COM ${jogador.pontosVida}\n"
 
             if (jogador.pontosVida <= 0) {
                 log += "\n[ = ] JOGADOR PERDEU\n"
@@ -415,7 +393,7 @@ fun batalhaChefe(jogador: PersonagemJogador, RPG: Rpg): String {
             chefe.pontosVida -= danoJ
 
             
-            log += "TURNO ${turno}: JOGADOR ATACOU COM $ataqueJ MONSTRO FICOU COM ${defesaM}\n"
+            log += "TURNO ${turno}: JOGADOR ATACOU COM $danoJ MONSTRO FICOU COM ${chefe.pontosVida}\n"
 
             turno++
 
