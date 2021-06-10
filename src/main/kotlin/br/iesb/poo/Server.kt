@@ -89,7 +89,7 @@ fun main() {
                 )
             }
 
-            post("/batalha/{idURL}") {
+            get("/batalha/{idURL}") {
 
                 val idJogador = call.parameters["idURL"]?.toInt()
                 val jogador = RPG.jogadores.find { it.id == idJogador }
