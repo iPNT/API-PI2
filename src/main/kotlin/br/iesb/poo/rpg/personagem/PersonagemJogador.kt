@@ -14,14 +14,9 @@ open class PersonagemJogador(
     //Arqueiro + Velocidade - maxVida; Cavaleiro + Ataque - maxMana; Mago + maxMana - Defesa
 
     var classe: Int = classeJogador
-    var vida: Int = 5
     private var xp: Int = 0
     var inventario = mutableListOf<ArrayList<String>>()
     var batalhas : Int = 1
-    var durabilidadeataque : Int = 0
-    var durabilidadedefesa : Int = 0
-    var ataqueitem: Int = 0
-    var defesaitem: Int = 0
     var pontosSabedoria: Float = 0.1f
 
 //    val inventario = arrayOf<Array<String>>() //[Item,Quantidade]
@@ -166,10 +161,6 @@ open class PersonagemJogador(
         log += "\n[ ➽ ] XP ATUAL: ${this.xp}\n"
         log += "[ ➽ ] XP NECESSÁRIO PARA O PRÓXIMO NÍVEL: ${xpProxNv}\n"
 
-        if ((1..10).random() + this.sorte >= 9) {
-                this.vida++
-                log += "\n[ ♥ ] VOCÊ ENCONTROU UMA POÇÃO DE VIDA NOS ESPÓLIOS, AGORA SUA VIDA É ${this.vida}\n"
-        }
 
         return log
     }
@@ -217,16 +208,6 @@ open class PersonagemJogador(
 
 
         return log
-    }
-
-    open fun removerItem (jogador: PersonagemJogador){
-        if (jogador.durabilidadeataque == 0) {
-            jogador.inventario.remove(jogador.inventario.find { it.get(0) == "arma" })
-            ataqueitem = 0
-        } else{
-            jogador.inventario.remove(jogador.inventario.find { it.get(0) == "armadura" })
-            defesaitem = 0
-        }
     }
 
 }
