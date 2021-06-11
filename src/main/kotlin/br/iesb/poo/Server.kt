@@ -1,6 +1,7 @@
 package br.iesb.poo
 
 import br.iesb.poo.rpg.Rpg
+import br.iesb.poo.rpg.TipoPersonagem
 import br.iesb.poo.rpg.personagem.PersonagemJogador
 import io.ktor.application.*
 import io.ktor.features.*
@@ -12,8 +13,9 @@ import io.ktor.routing.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import br.iesb.poo.rpg.batalha.batalha
-import br.iesb.poo.rpg.batalha.batalhaChefe
+//import br.iesb.poo.rpg.batalha.batalhaChefe
 import br.iesb.poo.rpg.loja.Itens
+import br.iesb.poo.rpg.personagem.PersonagemMonstro
 import java.io.File
 
 val RPG: Rpg = Rpg()
@@ -64,9 +66,9 @@ fun main() {
                 call.respondText(File("iesbRPG/src/main/kotlin/br/iesb/poo/rpg/taverna/chat.txt").readText())
             }
 
-
             post("/jogadores/criarjogador") {
                 val atributos = call.receive<PersonagemJogador>()
+                val novomonstro : PersonagemMonstro = RPG.criarMonstro(tipoPersonagem = TipoPersonagem.PERSONAGEM_MONSTRO)
                 val novojogador = PersonagemJogador(
                         atributos.classe,
                         atributos.nome,
@@ -74,6 +76,7 @@ fun main() {
                         RPG
                 )
                 novojogador.definirStatusBase() //Conferir com a Isa dps pra ver se faz sentido
+                novomonstro.definirMonstro(nivelMasmorra = novojogador.nivel)
 
                 RPG.jogadores.add(novojogador)
                 call.respondText(
@@ -89,17 +92,18 @@ fun main() {
                 )
             }
 
-            get("/batalha/{idURL}") {
+            get("/batalha/{idURL}/{op}") {
 
                 val idJogador = call.parameters["idURL"]?.toInt()
                 val jogador = RPG.jogadores.find { it.id == idJogador }
+                var option = call.parameters["op"]?.toInt()
 
                 if (jogador != null) {
                     if (jogador.batalhas % 10 == 0 && (1..10).random() > 5) {
-                        val log: String = batalhaChefe(jogador, RPG)
-                        call.respondText(log)
+                        //val log: String = batalhaChefe(jogador, RPG)
+                        //call.respondText(log)
                     } else {
-                        val log: String = batalha(jogador, RPG)
+                        val log: String = batalha(jogador, RPG.monstros[0], RPG, option)
                         call.respondText(log)
                     }
                     jogador.batalhas++

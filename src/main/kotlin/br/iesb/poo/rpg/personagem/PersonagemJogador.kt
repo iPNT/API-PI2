@@ -43,49 +43,50 @@ open class PersonagemJogador(
 
     fun definirStatusBase(){ //Inicialização dos statusBase
 
-        this.maxAtaque = 6
-        this.statusBaseAtaque = 6
+        this.maxAtaque = 7
+        this.statusBaseAtaque = 7
         this.pontosSabedoria = 0.0f
 
         if (classe == 1) {
 
-            this.maxVida = 5
-            this.maxMana = 6
-            this.maxDefesa = 6
-            this.maxVelocidade = 7
+            this.maxVida = 6
+            this.maxMana = 7
+            this.maxDefesa = 7
+            this.maxVelocidade = 8
 
-            this.statusBaseVida = 5
-            this.statusBaseMana = 6
-            this.statusBaseDefesa = 6
-            this.statusBaseVelocidade = 7
+            this.statusBaseVida = 6
+            this.statusBaseMana = 7
+            this.statusBaseDefesa = 8
+            this.statusBaseVelocidade = 8
 
 
         } else if (classe == 2){
 
-            this.maxVida = 7
-            this.maxMana = 5
-            this.maxDefesa = 6
-            this.maxVelocidade = 6
+            this.maxVida = 8
+            this.maxMana = 6
+            this.maxDefesa = 7
+            this.maxVelocidade = 7
 
-            this.statusBaseVida = 7
-            this.statusBaseMana = 5
-            this.statusBaseDefesa = 6
-            this.statusBaseVelocidade = 6
+            this.statusBaseVida = 8
+            this.statusBaseMana = 6
+            this.statusBaseDefesa = 7
+            this.statusBaseVelocidade = 7
 
         }
         else{
 
-            this.maxVida = 6
-            this.maxMana = 7
-            this.maxDefesa = 5
-            this.maxVelocidade = 6
+            this.maxVida = 7
+            this.maxMana = 8
+            this.maxDefesa = 6
+            this.maxVelocidade = 7
 
-            this.statusBaseVida = 6
-            this.statusBaseMana = 7
-            this.statusBaseDefesa = 5
-            this.statusBaseVelocidade = 6
+            this.statusBaseVida = 7
+            this.statusBaseMana = 8
+            this.statusBaseDefesa = 6
+            this.statusBaseVelocidade = 7
 
         }
+        nivelUp()
     }
 
     fun fugirPersonagem(velocidadePersonagem: Int, velocidadeMonstro: Int): Boolean{
@@ -180,29 +181,34 @@ open class PersonagemJogador(
 
         if (classe == 1) {
 
-            this.maxVida += ((2 * statusBaseVida) * nivel)/100 + nivel + 8
-            this.maxMana += ((2 * statusBaseMana) * nivel)/100 + nivel + 10
-            this.maxAtaque += ((2 * statusBaseAtaque) * nivel)/100 + nivel + 10
-            this.maxDefesa += ((2 * statusBaseDefesa) * nivel)/100 + nivel + 10
-            this.maxVelocidade += ((2 * statusBaseVelocidade) * nivel)/100 + nivel + 12
+            this.maxVida = ((2 * statusBaseVida) * nivel)/50 + nivel + 10
+            this.maxMana = ((2 * statusBaseMana) * nivel)/50 + nivel + 12
+            this.maxAtaque = ((2 * statusBaseAtaque) * nivel)/50 + nivel + 12
+            this.maxDefesa = ((2 * statusBaseDefesa) * nivel)/50 + nivel + 12
+            this.maxVelocidade = ((2 * statusBaseVelocidade) * nivel)/50 + nivel + 14
 
         } else if (classe == 2){
 
-            this.maxVida += ((2 * statusBaseVida) * nivel)/100 + nivel + 10
-            this.maxMana += ((2 * statusBaseMana) * nivel)/100 + nivel + 8
-            this.maxAtaque += ((2 * statusBaseAtaque) * nivel)/100 + nivel + 12
-            this.maxDefesa += ((2 * statusBaseDefesa) * nivel)/100 + nivel + 10
-            this.maxVelocidade += ((2 * statusBaseVelocidade) * nivel)/100 + nivel + 10
+            this.maxVida = ((2 * statusBaseVida) * nivel)/50 + nivel + 12
+            this.maxMana = ((2 * statusBaseMana) * nivel)/50 + nivel + 10
+            this.maxAtaque = ((2 * statusBaseAtaque) * nivel)/50 + nivel + 14
+            this.maxDefesa = ((2 * statusBaseDefesa) * nivel)/50 + nivel + 12
+            this.maxVelocidade = ((2 * statusBaseVelocidade) * nivel)/50 + nivel + 12
 
         } else {
 
-            this.maxVida += ((2 * statusBaseVida) * nivel)/100 + nivel + 10
-            this.maxMana += ((2 * statusBaseMana) * nivel)/100 + nivel + 12
-            this.maxAtaque += ((2 * statusBaseAtaque) * nivel)/100 + nivel + 10
-            this.maxDefesa += ((2 * statusBaseDefesa) * nivel)/100 + nivel + 8
-            this.maxVelocidade += ((2 * statusBaseVelocidade) * nivel)/100 + nivel + 10
+            this.maxVida = ((2 * statusBaseVida) * nivel)/50 + nivel + 12
+            this.maxMana = ((2 * statusBaseMana) * nivel)/50 + nivel + 14
+            this.maxAtaque = ((2 * statusBaseAtaque) * nivel)/50 + nivel + 12
+            this.maxDefesa = ((2 * statusBaseDefesa) * nivel)/50 + nivel + 10
+            this.maxVelocidade = ((2 * statusBaseVelocidade) * nivel)/50 + nivel + 12
         }
 
+        this.pontosVida = this.maxVida
+        this.pontosMana = this.maxMana
+        this.ataque = this.maxAtaque
+        this.defesa = this.maxDefesa
+        this.velocidade = this.maxVelocidade
 
         var log = "\n[ ↑ ] VOCÊ UPOU E AGORA ESTÁ NO NÍVEL ${this.nivel}\n"
 

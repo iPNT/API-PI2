@@ -41,16 +41,16 @@ class Rpg {
         tipoPersonagem: TipoPersonagem
     ): PersonagemMonstro {
 
-        val novoPersonagem =if (tipoPersonagem == TipoPersonagem.PERSONAGEM_MONSTRO){
+        val novoPersonagem = if (tipoPersonagem == TipoPersonagem.PERSONAGEM_MONSTRO){
             PersonagemMonstro(
-                novaRaca = (0..1).random(),
+                novaRaca = 1,
                 (listaNomes).random() + (listaTitulos).random(),
                 elementoMonstro = (1..4).random(),
                 RPG
             )
         } else{
             PersonagemMonstro(
-                novaRaca = 3,
+                novaRaca = 2,
                 (listaChefe).random(),
                 elementoMonstro = 1,
                 RPG

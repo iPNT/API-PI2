@@ -201,24 +201,11 @@ open class Personagem(nick: String, element: Int) {
         return dano
     }
 
-
-
-    fun calcularDanoBasico(nivelAtacante: Int,
-                           statusAtaqueAtacante: Int,
-                           statusDefesaVitima: Int): Int {
+    fun atacarPersonagem(ataquePersonagem: Int, defesaInimigo: Int): Int{
 
         var dano: Int = 0
 
-        dano = (statusAtaqueAtacante - 2 .. statusAtaqueAtacante + 2).random() * (statusAtaqueAtacante / statusDefesaVitima)
-
-        return dano
-    }
-
-    fun atacarPersonagem(ataquePersonagem: Int, nivelPersonagem: Int, defesaInimigo: Int): Int{
-
-        var dano: Int = 0
-
-        dano = calcularDanoBasico(nivelPersonagem, ataquePersonagem, defesaInimigo)
+        dano = (ataquePersonagem - 2 .. ataquePersonagem + 2).random() - (defesaInimigo/2)
 
         return dano
 
@@ -227,30 +214,29 @@ open class Personagem(nick: String, element: Int) {
 
     fun defender(defesaPersonagem: Int): Int {
 
-        var aumentoDefesa: Int = 20 //Valor a mudar no balanceamento
         var defesaP: Int = defesaPersonagem
 
-        defesaP += aumentoDefesa
+        defesaP += defesaP/2
 
         return defesaP
     }
 
 
-    fun calcularCura(nivelAtacante: Int, poderAtaque: Int, statusMaxManaAtacante: Int, elementoAtacante: Int): Int{
+    fun calcularCura(nivelAtacante: Int, poderAtaque: Int, statusMaxManaAtacante: Int): Int{
 
         var cura: Int = 0
+        var dano: Int = 0
 
-        if(elementoAtacante == 4){
 
-            cura = (((nivelAtacante * poderAtaque) * statusMaxManaAtacante) / 200) * stab
+        cura = ((nivelAtacante * poderAtaque) * statusMaxManaAtacante)
+        this.pontosVida += cura
 
+        if (this.pontosVida > this.maxVida){
+            this.pontosVida = this.maxVida
         }
-        else{
 
-            cura = ((nivelAtacante * poderAtaque) * statusMaxManaAtacante) / 200 //Valor divisor a ser ajustado com testes de balanceamento
-        }
 
-        return cura
+        return dano
 
     }
 
@@ -269,6 +255,7 @@ open class Personagem(nick: String, element: Int) {
             3-> dano = calcularDano(nivelAtacante, 10 + upgradeMagia, statusAtaqueAtacante, statusDefesaVitima, 3, elementoAtacante, elementoVitima)
             4-> dano = calcularDano(nivelAtacante, 10 + upgradeMagia, statusAtaqueAtacante, statusDefesaVitima, 4, elementoAtacante, elementoVitima)
             5-> dano = calcularDano(nivelAtacante, 10 + upgradeMagia, statusAtaqueAtacante, statusDefesaVitima, 5, elementoAtacante, elementoVitima)
+            6-> dano = calcularDano(nivelAtacante, 10 + upgradeMagia, statusAtaqueAtacante, statusDefesaVitima, 6, elementoAtacante, elementoVitima)
         }
 
         return dano

@@ -9,32 +9,39 @@ class PersonagemMonstro(
         rpgAtual: Rpg
 ) : Personagem(nomeMonstro, elementoMonstro) {
 
+
     var raca: Int = 0
     var derrotado = false
 
-    var nivelMasmorra: Int = 0
+    init {
+        id = genId(rpgAtual)
+        raca = novaRaca
 
-    fun definirStatusBase(){ //Inicialização dos statusBase
 
-        this.maxAtaque = 6
+    }
+
+
+    fun definirMonstro(nivelMasmorra: Int){ //Inicialização dos statusBase
+
+        this.maxAtaque = 1
         this.statusBaseAtaque = 6
 
         if (raca == 1) {
 
            // nivelMasmorra += (-2..2).random()
 
-            this.maxVida = 6
-            this.maxMana = 6
-            this.maxDefesa = 6
+            this.maxVida = 5
+            this.maxMana = 5
+            this.maxDefesa = 5
             this.maxVelocidade = 5
 
-            this.maxAtaque = 6
-            this.statusBaseAtaque = 6
+            this.maxAtaque = 5
+            this.statusBaseAtaque = 5
 
-            this.statusBaseVida = 6
-            this.statusBaseMana = 6
-            this.statusBaseDefesa = 6
-            this.statusBaseVelocidade = 6
+            this.statusBaseVida = 5
+            this.statusBaseMana = 5
+            this.statusBaseDefesa = 5
+            this.statusBaseVelocidade = 5
 
 
         } else{
@@ -42,7 +49,7 @@ class PersonagemMonstro(
             this.maxVida = 10
             this.maxMana = 10
             this.maxDefesa = 10
-            this.maxVelocidade = 1
+            this.maxVelocidade = 0
 
             this.statusBaseVida = 10
             this.statusBaseMana = 10
@@ -50,25 +57,18 @@ class PersonagemMonstro(
             this.statusBaseVelocidade = 10
 
         }
-    }
 
-    init {
+        this.maxVida = ((2 * statusBaseVida) * nivelMasmorra)/2
+        this.maxMana = ((2 * statusBaseMana) * nivelMasmorra)/2 + nivelMasmorra
+        this.maxAtaque = ((2 * statusBaseAtaque) * nivelMasmorra)/2
+        this.maxDefesa = ((2 * statusBaseDefesa) * nivelMasmorra)/2
+        this.maxVelocidade = ((2 * statusBaseVelocidade) * nivelMasmorra)/4
 
-        id = genId(rpgAtual)
-        raca = novaRaca
-
-
-         fun statusMonstro(){ //Será utilizada a mesma fórmula usada para calcular os status dos monstros: ((2 * statusBase) * nivel)/100 + nivel + 10
-            //obs: caso o personagem tenha alguma vantagem com um atributo, adicionar + 2, caso tenha desvantagem com um atributo, diminuir - 2
-
-            this.maxVida += ((2 * statusBaseVida) * nivelMasmorra)/100 + nivel + 8
-            this.maxMana += ((2 * statusBaseMana) * nivelMasmorra)/100 + nivel + 10
-            this.maxAtaque += ((2 * statusBaseAtaque) * nivelMasmorra)/100 + nivel + 10
-            this.maxDefesa += ((2 * statusBaseDefesa) * nivelMasmorra)/100 + nivel + 10
-            this.maxVelocidade += ((2 * statusBaseVelocidade) * nivelMasmorra)/100 + nivel + 12
-
-        }
-
+        this.pontosVida = this.maxVida
+        this.pontosMana = this.maxMana
+        this.ataque = this.maxAtaque
+        this.defesa = this.maxDefesa
+        this.velocidade = this.maxVelocidade
     }
 
     override fun genId(rpgAtual: Rpg): Int {
