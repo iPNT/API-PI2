@@ -89,28 +89,6 @@ open class PersonagemJogador(
         nivelUp()
     }
 
-    fun fugirPersonagem(velocidadePersonagem: Int, velocidadeMonstro: Int): Boolean{
-
-        var batalhaRolando = true
-
-        if(velocidadePersonagem > velocidadeMonstro){
-
-            batalhaRolando = false
-
-            return batalhaRolando
-        }
-        else{
-
-            return batalhaRolando
-        }
-    }
-
-//    private fun morrerJogador(rpg: Rpg): String {
-//
-//        rpg.jogadores.remove(rpg.jogadores.find { it.id == this.id })
-//        return "\n[ ✝ ] VOCÊ MORREU, SEU PERSONAGEM FOI DELETADO\n"
-//    }
-
     override fun derrota(rpg: Rpg): String { //Sugestão: retirar o negócio da redução de vida, manter a consequêcia do dinhiero
 
         var dinheiroRoubado = this.dinheiro / 2 //Arrumar depois
@@ -206,7 +184,6 @@ open class PersonagemJogador(
 
         this.pontosVida = this.maxVida
         this.pontosMana = this.maxMana
-        this.ataque = this.maxAtaque
         this.defesa = this.maxDefesa
         this.velocidade = this.maxVelocidade
 

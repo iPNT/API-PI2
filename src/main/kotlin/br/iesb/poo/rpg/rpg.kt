@@ -45,7 +45,7 @@ class Rpg {
             PersonagemMonstro(
                 novaRaca = 1,
                 (listaNomes).random() + (listaTitulos).random(),
-                elementoMonstro = (1..4).random(),
+                elementoMonstro = (1..5).random(),
                 RPG
             )
         } else{

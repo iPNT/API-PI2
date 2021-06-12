@@ -106,17 +106,16 @@ fun main() {
                         val log: String = batalha(jogador, RPG.monstros[0], RPG, option)
                         call.respondText(log)
                     }
-                    jogador.batalhas++
                 } else {
                     call.respond(HttpStatusCode.NoContent)
                 }
             }
 
-            post("/loja/{idURL}/{opcao}") {
+            get("/loja/{idURL}/{opcao}") {
 
                 val idJogador = call.parameters["idURL"]?.toInt()
-                val opcao = call.parameters["opcao"].toString()
                 val jogador = RPG.jogadores.find { it.id == idJogador }
+                val opcao = call.parameters["opcao"].toString()
 
                 if (jogador != null) {
 

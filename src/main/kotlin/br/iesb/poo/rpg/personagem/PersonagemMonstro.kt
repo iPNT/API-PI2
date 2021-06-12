@@ -28,8 +28,6 @@ class PersonagemMonstro(
 
         if (raca == 1) {
 
-           // nivelMasmorra += (-2..2).random()
-
             this.maxVida = 5
             this.maxMana = 5
             this.maxDefesa = 5
@@ -58,11 +56,11 @@ class PersonagemMonstro(
 
         }
 
-        this.maxVida = ((2 * statusBaseVida) * nivelMasmorra)/2
-        this.maxMana = ((2 * statusBaseMana) * nivelMasmorra)/2 + nivelMasmorra
-        this.maxAtaque = ((2 * statusBaseAtaque) * nivelMasmorra)/2
-        this.maxDefesa = ((2 * statusBaseDefesa) * nivelMasmorra)/2
-        this.maxVelocidade = ((2 * statusBaseVelocidade) * nivelMasmorra)/4
+        this.maxVida = ((statusBaseVida) * (nivelMasmorra..nivelMasmorra+1).random())/2 + (0..6).random()
+        this.maxMana = ((statusBaseMana) * (nivelMasmorra..nivelMasmorra+1).random())/2 + (0..6).random()
+        this.maxAtaque = ((statusBaseAtaque) * (nivelMasmorra..nivelMasmorra+1).random())/2 + (0..6).random()
+        this.maxDefesa = ((statusBaseDefesa) * (nivelMasmorra..nivelMasmorra+1).random())/2 + (0..6).random()
+        this.maxVelocidade = ((statusBaseVelocidade) * (nivelMasmorra..nivelMasmorra+1).random())/2 + (0..6).random()
 
         this.pontosVida = this.maxVida
         this.pontosMana = this.maxMana
