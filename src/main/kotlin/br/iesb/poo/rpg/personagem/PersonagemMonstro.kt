@@ -24,7 +24,7 @@ class PersonagemMonstro(
     fun definirMonstro(nivelMasmorra: Int){ //Inicialização dos statusBase
 
         this.maxAtaque = 1
-        this.statusBaseAtaque = 6
+
 
         if (raca == 1) {
 
@@ -40,27 +40,29 @@ class PersonagemMonstro(
             this.statusBaseMana = 5
             this.statusBaseDefesa = 5
             this.statusBaseVelocidade = 5
+            this.statusBaseAtaque = 6
 
 
         } else{
 
-            this.maxVida = 10
+            this.maxVida = 15
             this.maxMana = 10
             this.maxDefesa = 10
             this.maxVelocidade = 0
 
-            this.statusBaseVida = 10
+            this.statusBaseVida = 15
             this.statusBaseMana = 10
             this.statusBaseDefesa = 10
             this.statusBaseVelocidade = 10
+            this.statusBaseAtaque = 10
 
         }
 
-        this.maxVida = ((statusBaseVida) * (nivelMasmorra..nivelMasmorra+1).random())/2 + (0..6).random()
-        this.maxMana = ((statusBaseMana) * (nivelMasmorra..nivelMasmorra+1).random())/2 + (0..6).random()
-        this.maxAtaque = ((statusBaseAtaque) * (nivelMasmorra..nivelMasmorra+1).random())/2 + (0..6).random()
-        this.maxDefesa = ((statusBaseDefesa) * (nivelMasmorra..nivelMasmorra+1).random())/2 + (0..6).random()
-        this.maxVelocidade = ((statusBaseVelocidade) * (nivelMasmorra..nivelMasmorra+1).random())/2 + (0..6).random()
+        this.maxVida = ((statusBaseVida) * (nivelMasmorra..nivelMasmorra+2).random())/2 + (1..6).random()
+        this.maxMana = ((statusBaseMana) * (nivelMasmorra..nivelMasmorra+2).random())/2 + (1..6).random()
+        this.maxAtaque = ((statusBaseAtaque) * (nivelMasmorra..nivelMasmorra+2).random())/2 + (1..6).random()
+        this.maxDefesa = ((statusBaseDefesa) * (nivelMasmorra..nivelMasmorra+2).random())/2 + (1..6).random()
+        this.maxVelocidade = ((statusBaseVelocidade) * (nivelMasmorra..nivelMasmorra+2).random())/2 + (1..6).random()
 
         this.pontosVida = this.maxVida
         this.pontosMana = this.maxMana

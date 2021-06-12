@@ -54,12 +54,13 @@ class Rpg {
             PersonagemMonstro(
                 novaRaca = 2,
                 (listaChefe).random(),
-                elementoMonstro = 1,
+                elementoMonstro = 4,
                 RPG
             )
         }
 
         monstros.add(novoPersonagem)
+
         return novoPersonagem
     }
 

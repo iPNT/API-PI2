@@ -14,7 +14,6 @@ import io.ktor.routing.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import br.iesb.poo.rpg.batalha.batalha
-//import br.iesb.poo.rpg.batalha.batalhaChefe
 import br.iesb.poo.rpg.loja.Itens
 import br.iesb.poo.rpg.personagem.PersonagemMonstro
 import java.io.File
@@ -28,22 +27,6 @@ fun main() {
                 gson {
                     setPrettyPrinting()
                 }
-            }
-
-            get("/") {
-                call.respondText(
-                        "ROTAS\n\n" +
-                                "GET Listar Jogadores: /jogadores\n" +
-                                "GET Listar Monstros: /monstros\n" +
-                                "POST Criar um novo Jogador: /jogadores/criarjogador\n" +
-                                "POST Travar uma Batalha: /batalha/(JogadorID)/(AjudanteID)\n" +
-                                "POST Comprar Itens: /loja/(JogadorID)/(ItemID)\n" +
-                                "POST Visualizar seu Inventario: /inventario/(JogadorID)\n" +
-                                "POST Contratar um Mercenário: /taverna/(JogadorID)\n" +
-                                "PUT Enviar uma Menssagem: /taverna/chat/(JogadorID)/(Menssagem)\n" +
-                                "GET Visualizar o Chat de Menssagens: /taverna/chat",
-                        status = HttpStatusCode.OK
-                )
             }
 
             get("/pessoa"){
@@ -103,123 +86,52 @@ fun main() {
                 )
             }
 
-            get("/batalha/{idURL}/{op}") {
-
+            get("/batalha/{n}/{idURL}/{op}") {
+                val bt = call.parameters["n"]?.toInt()
                 val idJogador = call.parameters["idURL"]?.toInt()
                 val jogador = RPG.jogadores.find { it.id == idJogador }
                 var option = call.parameters["op"]?.toInt()
 
+
                 if (jogador != null) {
-                    if (jogador.batalhas % 10 == 0 && (1..10).random() > 5) {
-                        //val log: String = batalhaChefe(jogador, RPG)
-                        //call.respondText(log)
-                    } else {
-                        val log: String = batalha(jogador, RPG.monstros[0], RPG, option)
+                    if (bt==0){
+                        val log: String = batalha(jogador, RPG.monstros[0], RPG, option, 0)
+                        call.respondText(log)
+                    }else {
+                        val log: String = batalha(jogador, RPG.monstros[0], RPG, option, bt)
                         call.respondText(log)
                     }
+
                 } else {
                     call.respond(HttpStatusCode.NoContent)
                 }
             }
+
+            get("/elemento/{idURL}/{elemento}"){
+                val idJogador = call.parameters["idURL"]?.toInt()
+                val jogador = RPG.jogadores.find { it.id == idJogador }
+                val element = call.parameters["elemento"]?.toInt()
+
+                if (element != null) {
+                    if (jogador != null) {
+                        jogador.elemento = element
+                    }
+                }
+            }
+
 
             get("/loja/{idURL}/{opcao}") {
 
                 val idJogador = call.parameters["idURL"]?.toInt()
                 val jogador = RPG.jogadores.find { it.id == idJogador }
                 val opcao = call.parameters["opcao"].toString()
-
+                var log: String = ""
                 if (jogador != null) {
-
-                    val itens = Itens(opcao, "", "", "", -1, jogador)
-                    val retorno = itens.buscar(opcao)
-
-                    if (!retorno.isNullOrEmpty()) {
-
-                        if (jogador.dinheiro >= retorno[4].toInt()) {
-                            jogador.dinheiro = jogador.dinheiro - retorno[4].toInt()
-
-                            itens.efeito(jogador, opcao)
-
-                            if (retorno[1] != "poção") {
-                                var eff = itens.buscar(opcao)[3].split(".") as ArrayList<String>
-                                if (eff[0] == "atk") {
-                                    var arr = arrayListOf<String>(retorno[1], "O equipamento é ${retorno[2]}", "${eff[1]} de ataque")
-                                    jogador.inventario.add(arr)
-
-                                }else{
-                                    var arr = arrayListOf<String>(retorno[1], "O equipamento é ${retorno[2]}", "${eff[1]} de defesa")
-                                    jogador.inventario.add(arr)
-                                }
-
-                            }
-
-                            call.respondText(
-                                    "Você comprou ${retorno[2]} pelo valor de ${retorno[4]} moedas de ouro!\n" +
-                                            "Muito Obrigada! Volte sempre",
-                                    status = (HttpStatusCode.OK)
-                            )
-                        } else {
-                            call.respondText(
-                                    "Você não tem moedas de ouro suficientes para comprar ${retorno[2]} e não vendemos fiado",
-                                    status = (HttpStatusCode.Forbidden)
-                            )
-
-                        }
-
-                    } else {
-                        call.respondText(
-                                "Infelizmente estamos com falta de estoque!\n" +
-                                        "Muito Obrigada! Agradeçemos a compreensão",
-                                status = (HttpStatusCode.NoContent)
-                        )
-
-                    }
-                } else {
-                    call.respondText(
-                            "Verifique o ID, jogador não existe!!",
-                            status = (HttpStatusCode.NoContent)
-                    )
-
-                }
+                    val itens = Itens()
+                    log = itens.efeito(jogador, opcao)
+                 }
+                call.respondText(log)
             }
-
-            post("/inventario/{idURL}") {
-
-                val idJogador = call.parameters["idURL"]?.toInt()
-                val jogador = RPG.jogadores.find { it.id == idJogador }
-
-
-                if (jogador != null) {
-
-                    if (jogador.inventario.isNotEmpty()) {
-
-                        call.respond(jogador.inventario)
-                    } else {
-                        call.respond(HttpStatusCode.NotFound)
-                    }
-                } else {
-                    call.respond(HttpStatusCode.NoContent)
-                }
-            }
-
-            /*put("/taverna/chat/{idURL}/{texto}") {
-                var msg = call.parameters["texto"].toString()
-                val idJogador = call.parameters["idURL"]?.toInt()
-                val jogador = RPG.jogadores.find { it.id == idJogador }
-
-                //Formatação da Data
-                val data = LocalDateTime.now()
-                val formato = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm")
-                val formatado = data.format(formato)
-
-                if (jogador != null) {
-                    msg = "<${formatado}> ${jogador.nome} diz: " + msg + "\n";
-                    File("iesbRPG/src/main/kotlin/br/iesb/poo/rpg/taverna/chat.txt").appendText(msg)
-                    call.respond(HttpStatusCode.OK)
-                } else {
-                    call.respond(HttpStatusCode.NoContent)
-                }
-            }*/
 
         }
     }.start(wait = true)
