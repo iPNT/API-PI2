@@ -1,5 +1,6 @@
 package br.iesb.poo
 
+import br.iesb.poo.pessoas.IdPessoa
 import br.iesb.poo.rpg.Rpg
 import br.iesb.poo.rpg.TipoPersonagem
 import br.iesb.poo.rpg.personagem.PersonagemJogador
@@ -42,6 +43,16 @@ fun main() {
                                 "PUT Enviar uma Menssagem: /taverna/chat/(JogadorID)/(Menssagem)\n" +
                                 "GET Visualizar o Chat de Menssagens: /taverna/chat",
                         status = HttpStatusCode.OK
+                )
+            }
+
+            get("/pessoa"){
+                //call.receive<IdPessoa>()
+                val novaPessoa = IdPessoa(RPG)
+                RPG.ids.add(novaPessoa)
+                call.respondText(
+                    "Criado com sucesso de ID: ${novaPessoa.id}",
+                    status = HttpStatusCode.Created
                 )
             }
 

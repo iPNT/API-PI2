@@ -1,6 +1,7 @@
 package br.iesb.poo.rpg
 
 import br.iesb.poo.RPG
+import br.iesb.poo.pessoas.IdPessoa
 import br.iesb.poo.rpg.personagem.PersonagemJogador
 import br.iesb.poo.rpg.personagem.PersonagemMonstro
 
@@ -13,6 +14,7 @@ class Rpg {
 
     val jogadores = mutableListOf<PersonagemJogador>()
     val monstros = mutableListOf<PersonagemMonstro>()
+    val ids = mutableListOf<IdPessoa>()
 
     private val listaNomes = arrayOf(
         "Bei, ",
